@@ -1,0 +1,183 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove=".jpg" />
+    <None Remove=".png" />
+    <None Remove="akcii.png" />
+    <None Remove="aptechka.png" />
+    <None Remove="baby.png" />
+    <None Remove="banner1.jpg" />
+    <None Remove="banner2.jpg" />
+    <None Remove="geo.png" />
+    <None Remove="images\banner1.jpg" />
+    <None Remove="images\banner2.jpg" />
+    <None Remove="images\banner3.jpg" />
+    <None Remove="images\cream_12255561.png" />
+    <None Remove="images\discount_272535.png" />
+    <None Remove="images\doctor_2051565.png" />
+    <None Remove="images\dozhd_g25k01etzi38_512.png" />
+    <None Remove="images\first-aid-kit_16280537.png" />
+    <None Remove="images\kashel_9himcrh36s9w_512.png" />
+    <None Remove="images\lecarstvo.png" />
+    <None Remove="images\lekarstva_cqhw4sy7e6ml_512.png" />
+    <None Remove="images\Logo.png" />
+    <None Remove="images\logo1.png" />
+    <None Remove="images\logo10.png" />
+    <None Remove="images\logo11.png" />
+    <None Remove="images\logo12.png" />
+    <None Remove="images\logo2.png" />
+    <None Remove="images\logo3.png" />
+    <None Remove="images\logo4.png" />
+    <None Remove="images\logo5.png" />
+    <None Remove="images\logo6.png" />
+    <None Remove="images\logo7.png" />
+    <None Remove="images\logo8.png" />
+    <None Remove="images\logo9.png" />
+    <None Remove="images\lupa.png" />
+    <None Remove="images\mnogotochie_s_tremya_tochkami_38wunm7y05u8_512.png" />
+    <None Remove="images\mothers-day_16006161.png" />
+    <None Remove="images\nasmork_a0fvvutbiqvq_512.png" />
+    <None Remove="images\optica.png" />
+    <None Remove="images\placeholder_161667.png" />
+    <None Remove="images\shopping-cart_66867.png" />
+    <None Remove="images\sobachij_domik_38as4vhq3uzd_512.png" />
+    <None Remove="images\sunglasses_1296563.png" />
+    <None Remove="images\vitamin_12448688.png" />
+    <None Remove="images\zheludok_w7rkm7ve986y_512.png" />
+    <None Remove="images\zub_mynrfyqun1ir_512.png" />
+    <None Remove="korzina.png" />
+    <None Remove="kosm.png" />
+    <None Remove="medtech.png" />
+    <None Remove="sunglasses_1296563.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\banner2.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\banner3.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\cream_12255561.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\discount_272535.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\doctor_2051565.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\dozhd_g25k01etzi38_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\first-aid-kit_16280537.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\kashel_9himcrh36s9w_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\lecarstvo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\lekarstva_cqhw4sy7e6ml_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\Logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FontAwesome.Sharp" Version="6.3.0" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+    <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
+    <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\banner1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\logo9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\lupa.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\mnogotochie_s_tremya_tochkami_38wunm7y05u8_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\mothers-day_16006161.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\nasmork_a0fvvutbiqvq_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\optica.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\placeholder_161667.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\shopping-cart_66867.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\sobachij_domik_38as4vhq3uzd_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\sunglasses_1296563.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\vitamin_12448688.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\zheludok_w7rkm7ve986y_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\zub_mynrfyqun1ir_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+</Project>

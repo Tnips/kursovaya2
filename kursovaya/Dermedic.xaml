@@ -1,0 +1,244 @@
+﻿<Window x:Class="kursovaya.Dermedic"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kursovaya"
+        mc:Ignorable="d"
+        Title="Dermedic"  Height="705" Width="1120"
+        Icon="/images/Logo.png"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <Style x:Key="OptionsPanelStyle" TargetType="Grid">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Background" Value="#FFC8FCEF"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Width" To="200" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Width" To="60" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="HoverButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Grid.RenderTransform>
+                                <ScaleTransform x:Name="scaleTransform" ScaleX="1" ScaleY="1" CenterX="0.5" CenterY="0.5"/>
+                            </Grid.RenderTransform>
+                            <Ellipse x:Name="ellipse" Fill="#FC4445" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1.2" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1.2" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleX" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="scaleTransform" Storyboard.TargetProperty="ScaleY" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#FF599CCC" BorderThickness="1" Grid.Row="0">
+            <Grid Background="#FF599CCC" Height="30" VerticalAlignment="Center" Margin="1,0,1,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="images/Logo.png" Height="30" VerticalAlignment="Center" Margin="7,0,11,0"/>
+                <TextBlock Text="BelPharm" VerticalAlignment="Center" Margin="0,0,913,0" Foreground="White" Grid.Column="1" FontFamily="Bernard MT Condensed" FontSize="15"/>
+                <Button Grid.Column="2" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="MinimizeWindow">
+                    <Path Data="M 0,10 L 10,10" Stroke="White" StrokeThickness="2"/>
+                </Button>
+                <Button Grid.Column="3" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="MaximizeWindow">
+                    <Path Data="M 0,0 L 10,0 L 10,10 L 0,10 Z" Stroke="White" StrokeThickness="2"/>
+                </Button>
+                <Button Grid.Column="4" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="CloseWindow">
+                    <Path Data="M 0,0 L 10,10 M 0,10 L 10,0" Stroke="White" StrokeThickness="2"/>
+                </Button>
+            </Grid>
+        </Border>
+        <Border Background="#FFD1E6E5" BorderBrush="#FFD1E6E5" BorderThickness="1" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Margin="219,0,219,0">
+                    <StackPanel.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FF599CCC" Offset="0.2"/>
+                            <GradientStop Color="#FFD1E6E5" Offset="0.5"/>
+                            <GradientStop Color="#FF599CCC" Offset="0.9"/>
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
+                    <Border CornerRadius="10" Width="228" Height="114" Margin="100,0,0,0">
+                        <Grid Margin="-244,8,244,-8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Source="/images/logo9.png" Stretch="UniformToFill" Margin="10,-41,-67,-80" Grid.ColumnSpan="2"/>
+                        </Grid>
+                    </Border>
+                    <Border Margin="0,40,350,0" CornerRadius="10" Padding="10" Width="272">
+                        <TextBlock Text="Продукция бренда" FontSize="40" Margin="0,0,-179,0"/>
+                    </Border>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="220" Height="198" Margin="460,-260,0,0">
+                        <Button x:Name="home" Click="home_Click" Width="110" Height="104" Margin="10,20,0,0" Style="{StaticResource HoverButtonStyle}">
+                            <Button.Content>
+                                <StackPanel>
+                                    <Image Source="images/sobachij_domik_38as4vhq3uzd_512.png" Width="60" Height="66" Stretch="Uniform"/>
+                                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Top" TextAlignment="Center">
+                                      Вернуться на
+                                      <LineBreak/>
+                                      главную
+                                    </TextBlock>
+                                </StackPanel>
+                            </Button.Content>
+                        </Button>
+                        <Ellipse Width="55" Height="55" Fill="#FC4445" Margin="10,-60,0,0"/>
+                        <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionsPanelStyle}">
+            <StackPanel Margin="0,0,0,0" Background="#FF34ABBA">
+                <StackPanel Height="168">
+                    <Button x:Name="korzinaButton" Click="korzinaButton_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" >
+                        <Grid>
+                            <Image x:Name="korzina" Source="images/shopping-cart_66867.png" Height="40" Width="45" Margin="-14,0,134,0" />
+                            <TextBlock Text="Корзина" Width="99" Margin="59,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                        </Grid>
+
+                    </Button>
+                    <Button x:Name="geo" Click="geo_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Text="Аптеки" Width="99" Margin="58,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Image HorizontalAlignment="Left" Height="40" Width="45" Margin="-12,0,0,0" VerticalAlignment="Center" Source="images/placeholder_161667.png"/>
+                        </Grid>
+
+                    </Button>
+                    <Button x:Name="akcii" Click="akcii_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+
+                            <TextBlock Text="Акции" Width="99" Margin="57,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Image HorizontalAlignment="Left" Height="40" Width="45" VerticalAlignment="Center" Margin="-11,0,0,0" Source="images/discount_272535.png"/>
+                        </Grid>
+                    </Button>
+                </StackPanel>
+                <Border Height="20" Background="Transparent"/>
+                <StackPanel Height="485">
+                    <Button x:Name="drugs" Click="drugs_Click"  Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <Image HorizontalAlignment="Left" Height="42" Width="52" VerticalAlignment="Center" Margin="-16,0,0,0" Source="images/lekarstva_cqhw4sy7e6ml_512.png"/>
+                            <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                          Лекарственные
+                          <LineBreak/>
+                          препараты
+                            </TextBlock>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="aptechka" Click="aptechka_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" >
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="33*"/>
+                                <RowDefinition Height="8*"/>
+                            </Grid.RowDefinitions>
+                            <Image HorizontalAlignment="Left" Height="40" Width="50" VerticalAlignment="Top" Margin="-15,0,0,0" Source="images/first-aid-kit_16280537.png" Grid.RowSpan="2"/>
+                            <TextBlock Text="Аптечка" Width="99" Margin="57,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="bad" Click="bad_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                          Витамины и
+                          <LineBreak/>
+                          БАДы
+                            </TextBlock>
+                            <Image HorizontalAlignment="Left" Height="55" Margin="-16,0,0,0" VerticalAlignment="Top" Width="50" Source="images/vitamin_12448688.png"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="medtech" Click="medtech_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                          Медицинская 
+                          <LineBreak/>
+                          техника
+                            </TextBlock>
+                            <Image HorizontalAlignment="Left" Height="45" Margin="-15,0,0,0" VerticalAlignment="Center" Width="40" Source="images/doctor_2051565.png"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="optica" Click="optica_Click" Width="200" Background="#FF34ABBA" Height="45" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Text="Оптика" Width="99" Margin="57,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Image HorizontalAlignment="Left" Height="64" Margin="-18,0,0,0" VerticalAlignment="Center" Width="52" Source="images/optica.png"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="kosm" Click="kosm_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                          Гигиена и
+                          <LineBreak/>
+                          косметика
+                            </TextBlock>
+                            <Image HorizontalAlignment="Left" Height="55" Margin="-14,0,0,0" VerticalAlignment="Center" Width="45" Source="images/cream_12255561.png"/>
+                        </Grid>
+                    </Button>
+                    <Button x:Name="momandbaby" Click="momandbaby_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+                            <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                          Мама и
+                          <LineBreak/>
+                          малыш
+                            </TextBlock>
+                            <Image HorizontalAlignment="Left" Height="50" Margin="-18,0,0,0" VerticalAlignment="Center" Width="103" Source="images/mothers-day_16006161.png"/>
+
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>
