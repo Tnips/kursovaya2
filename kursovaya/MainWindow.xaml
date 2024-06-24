@@ -431,7 +431,7 @@
                     </StackPanel>
 
                 </StackPanel>
-                <StackPanel Margin="899,0,0,335">
+                <StackPanel x:Name="AvtorizPanel" Margin="899,0,0,335">
                     <StackPanel.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FC4445"/>
@@ -521,8 +521,8 @@
         </Border>
         <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionsPanelStyle}">
             <StackPanel Margin="0,0,0,0" Background="#FF34ABBA">
-                <StackPanel Height="168">
-                    <Button x:Name="korzinaButton" Click="korzinaButton_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" >
+                <StackPanel Height="221">
+                    <Button x:Name="korzinaButton" Click="korzinaButton_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" Visibility="Collapsed" >
                         <Grid>
                             <Image x:Name="korzina" Source="images/shopping-cart_66867.png" Height="40" Width="45" Margin="-14,0,134,0" />
                             <TextBlock Text="Корзина" Width="99" Margin="59,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
@@ -543,9 +543,15 @@
                             <Image HorizontalAlignment="Left" Height="40" Width="45" VerticalAlignment="Center" Margin="-11,0,0,0" Source="images/discount_272535.png"/>
                         </Grid>
                     </Button>
+                    <Button x:Name="user" Click="user_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" Visibility="Collapsed">
+                        <Grid>
+
+                            <TextBlock Text="Ваш аккаунт" Width="99" Margin="57,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Image HorizontalAlignment="Left" Height="40" Width="45" VerticalAlignment="Center" Margin="-13,0,0,0" Source="/images/polzovatel_27osszuxk306_512.png"/>
+                        </Grid>
+                    </Button>
                 </StackPanel>
-                <Border Height="20" Background="Transparent"/>
-                <StackPanel Height="485">
+                <StackPanel Height="407" Margin="0 20 0 0">
                     <Button x:Name="drugs" Click="drugs_Click"  Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <Image HorizontalAlignment="Left" Height="42" Width="52" VerticalAlignment="Center" Margin="-16,0,0,0" Source="images/lekarstva_cqhw4sy7e6ml_512.png"/>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kursovaya.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,24 @@ namespace kursovaya
         public Kashel()
         {
             InitializeComponent();
-        }
+			ObnovZagr();
+		}
+
+		private void ObnovZagr()
+		{
+			if (CurrentUser.User != null)
+			{
+				user.Visibility = Visibility.Visible;
+				korzinaButton.Visibility = Visibility.Visible;
+
+			}
+			else
+			{
+				user.Visibility = Visibility.Collapsed;
+				korzinaButton.Visibility = Visibility.Collapsed;
+			}
+		}
+
 		private void CloseWindow(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
@@ -116,6 +134,12 @@ namespace kursovaya
 		{
 			MomandBaby momandBaby = new MomandBaby();
 			momandBaby.Show();
+			Close();
+		}
+		private void user_Click(object sender, RoutedEventArgs e)
+		{
+			User user = new User();
+			user.Show();
 			Close();
 		}
 	}

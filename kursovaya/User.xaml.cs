@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace kursovaya
 {
-    /// <summary>
-    /// Логика взаимодействия для IsisPharma.xaml
-    /// </summary>
-    public partial class IsisPharma : Window
-    {
-        public IsisPharma()
-        {
-            InitializeComponent();
+	/// <summary>
+	/// Логика взаимодействия для User.xaml
+	/// </summary>
+	public partial class User : Window
+	{
+		public User()
+		{
+			InitializeComponent();
 			ObnovZagr();
 		}
 
@@ -136,6 +136,7 @@ namespace kursovaya
 			momandBaby.Show();
 			Close();
 		}
+
 		private void user_Click(object sender, RoutedEventArgs e)
 		{
 			User user = new User();
@@ -144,4 +145,3 @@ namespace kursovaya
 		}
 	}
 }
-

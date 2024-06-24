@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
+using kursovaya.Models;
 
 
 namespace kursovaya
@@ -36,6 +37,24 @@ namespace kursovaya
 			InitializeComponent();
 			InitializeTimer();
 			DisplayCurrentImage();
+			ObnovZagr();
+		}
+
+		private void ObnovZagr()
+		{
+			if (CurrentUser.User != null)
+			{
+				user.Visibility = Visibility.Visible;
+				korzinaButton.Visibility = Visibility.Visible;
+				AvtorizPanel.Visibility = Visibility.Collapsed;
+
+			}
+			else
+			{
+				user.Visibility = Visibility.Collapsed;
+				korzinaButton.Visibility = Visibility.Collapsed;
+				AvtorizPanel.Visibility = Visibility.Visible;
+			}
 		}
 
 		private void InitializeTimer()
@@ -94,7 +113,7 @@ namespace kursovaya
 		{
 			Akcii akcii = new Akcii();
 			akcii.Show();
-			Close();
+			Hide();
 		}
 
 		private void drugs_Click(object sender, RoutedEventArgs e)
@@ -283,7 +302,6 @@ namespace kursovaya
 		{
 			var login = RegisterName.Text;
 			var password = RegisterPassword.Password;
-
 			string querystring = $"insert into register(login_user, password_user) values ('{login}', '{password}')";
 
 			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
@@ -293,7 +311,18 @@ namespace kursovaya
 			if (command.ExecuteNonQuery() == 1)
 			{
 				System.Windows.MessageBox.Show("Аккаунт успешно создан!", "Успех!");
-				
+
+				CurrentUser.User = new kursovaya.Models.User
+				{
+					Login = login,
+					Password = password
+				};
+				Authentific.UserRegister = true;
+				ObnovZagr();
+				AvtorizPanel.Visibility = Visibility.Collapsed;
+				user.Visibility = Visibility.Visible;
+				korzinaButton.Visibility = Visibility.Visible;
+
 			}
 			else
 			{
@@ -403,7 +432,18 @@ namespace kursovaya
 			if (table.Rows.Count == 1)
 			{
 				System.Windows.MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);
+				var row = table.Rows[0];
+				CurrentUser.User = new kursovaya.Models.User
+				{
+					Login = (string)row["login_user"],
+					Password = (string)row["password_user"]
+				};
+				Authentific.UserAuthentic = true;
+				ObnovZagr();
+				AvtorizPanel.Visibility = Visibility.Collapsed;
 
+				user.Visibility = Visibility.Visible;
+				korzinaButton.Visibility = Visibility.Visible;
 			}
 			else
 			{
@@ -439,6 +479,13 @@ namespace kursovaya
 		{
 			LoginName.MaxLength = 50;
 			LoginPassword.MaxLength = 16;
+		}
+
+		private void user_Click(object sender, RoutedEventArgs e)
+		{
+			User user = new User();
+			user.Show();
+			Close();
 		}
 	}
 }

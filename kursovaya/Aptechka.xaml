@@ -144,7 +144,7 @@
         </Border>
         <Grid Grid.Row="1" Grid.Column="0" Style="{StaticResource OptionsPanelStyle}">
             <StackPanel Margin="0,0,0,0" Background="#FF34ABBA">
-                <StackPanel Height="168">
+                <StackPanel Height="221">
                     <Button x:Name="korzinaButton" Click="korzinaButton_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA" >
                         <Grid>
                             <Image x:Name="korzina" Source="images/shopping-cart_66867.png" Height="40" Width="45" Margin="-14,0,134,0" />
@@ -166,16 +166,22 @@
                             <Image HorizontalAlignment="Left" Height="40" Width="45" VerticalAlignment="Center" Margin="-11,0,0,0" Source="images/discount_272535.png"/>
                         </Grid>
                     </Button>
+                    <Button x:Name="user" Click="user_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
+                        <Grid>
+
+                            <TextBlock Text="Ваш аккаунт" Width="99" Margin="57,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                            <Image HorizontalAlignment="Left" Height="40" Width="45" VerticalAlignment="Center" Margin="-13,0,0,0" Source="/images/polzovatel_27osszuxk306_512.png"/>
+                        </Grid>
+                    </Button>
                 </StackPanel>
-                <Border Height="20" Background="Transparent"/>
-                <StackPanel Height="485">
+                <StackPanel Height="407" Margin="0 40 0 0">
                     <Button x:Name="drugs" Click="drugs_Click"  Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <Image HorizontalAlignment="Left" Height="42" Width="52" VerticalAlignment="Center" Margin="-16,0,0,0" Source="images/lekarstva_cqhw4sy7e6ml_512.png"/>
                             <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                          Лекарственные
-                          <LineBreak/>
-                          препараты
+                  Лекарственные
+                  <LineBreak/>
+                  препараты
                             </TextBlock>
                         </Grid>
                     </Button>
@@ -192,9 +198,9 @@
                     <Button x:Name="bad" Click="bad_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                          Витамины и
-                          <LineBreak/>
-                          БАДы
+                  Витамины и
+                  <LineBreak/>
+                  БАДы
                             </TextBlock>
                             <Image HorizontalAlignment="Left" Height="55" Margin="-16,0,0,0" VerticalAlignment="Top" Width="50" Source="images/vitamin_12448688.png"/>
                         </Grid>
@@ -202,9 +208,9 @@
                     <Button x:Name="medtech" Click="medtech_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                          Медицинская 
-                          <LineBreak/>
-                          техника
+                  Медицинская 
+                  <LineBreak/>
+                  техника
                             </TextBlock>
                             <Image HorizontalAlignment="Left" Height="45" Margin="-15,0,0,0" VerticalAlignment="Center" Width="40" Source="images/doctor_2051565.png"/>
                         </Grid>
@@ -218,9 +224,9 @@
                     <Button x:Name="kosm" Click="kosm_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                          Гигиена и
-                          <LineBreak/>
-                          косметика
+                  Гигиена и
+                  <LineBreak/>
+                  косметика
                             </TextBlock>
                             <Image HorizontalAlignment="Left" Height="55" Margin="-14,0,0,0" VerticalAlignment="Center" Width="45" Source="images/cream_12255561.png"/>
                         </Grid>
@@ -228,9 +234,9 @@
                     <Button x:Name="momandbaby" Click="momandbaby_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
                             <TextBlock Width="99" Height="35" Margin="57,9,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-                          Мама и
-                          <LineBreak/>
-                          малыш
+                  Мама и
+                  <LineBreak/>
+                  малыш
                             </TextBlock>
                             <Image HorizontalAlignment="Left" Height="50" Margin="-18,0,0,0" VerticalAlignment="Center" Width="103" Source="images/mothers-day_16006161.png"/>
 

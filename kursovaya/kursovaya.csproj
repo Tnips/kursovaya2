@@ -50,6 +50,7 @@
     <None Remove="images\nasmork_a0fvvutbiqvq_512.png" />
     <None Remove="images\optica.png" />
     <None Remove="images\placeholder_161667.png" />
+    <None Remove="images\polzovatel_27osszuxk306_512.png" />
     <None Remove="images\shopping-cart_66867.png" />
     <None Remove="images\sobachij_domik_38as4vhq3uzd_512.png" />
     <None Remove="images\sunglasses_1296563.png" />
@@ -168,6 +169,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\placeholder_161667.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\polzovatel_27osszuxk306_512.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\shopping-cart_66867.png">
