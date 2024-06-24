@@ -16,35 +16,31 @@
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
-        
-        <Style x:Key="PlaceholderTextBoxStyle" TargetType="TextBox">
-            <Setter Property="Foreground" Value="Gray"/>
-            <Setter Property="VerticalContentAlignment" Value="Top"/>
-            <Setter Property="Padding" Value="0"/>
+        <Style TargetType="TextBox">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
-                        <Grid>
-                            <Border x:Name="Border" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="5"/>
-                            <TextBlock x:Name="PlaceholderTextBlock" Text="{TemplateBinding Tag}" VerticalAlignment="Center" HorizontalAlignment="Left" Padding="{TemplateBinding Padding}" Margin="5,0" Visibility="Collapsed"/>
-                            <ScrollViewer x:Name="PART_ContentHost" VerticalAlignment="Center" Padding="{TemplateBinding Padding}" Background="Transparent"/>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Text" Value=""/>
-                                    <Condition Property="IsFocused" Value="False"/>
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Visible"/>
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            </Trigger>
-                            <Trigger Property="IsFocused" Value="True">
-                                <Setter TargetName="PlaceholderTextBlock" Property="Visibility" Value="Collapsed"/>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="10">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="1" 
+                            CornerRadius="10">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -178,7 +174,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-       
+
         <Storyboard x:Key="BannerAnimation" RepeatBehavior="Forever">
             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(ImageBrush.ImageSource)">
                 <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="Images/Banner1.jpg"/>
@@ -230,7 +226,7 @@
                             <GradientStop Color="#FF599CCC" Offset="0.9"/>
                         </LinearGradientBrush>
                     </StackPanel.Background>
-                   
+
 
                     <Border Margin="10" Background="White" CornerRadius="15" BorderBrush="Gray" BorderThickness="1" Width="530" HorizontalAlignment="Stretch" Height="44">
                         <Grid>
@@ -433,6 +429,7 @@
 
                         </StackPanel>
                     </StackPanel>
+
                 </StackPanel>
                 <StackPanel Margin="899,0,0,335">
                     <StackPanel.Background>
@@ -442,23 +439,82 @@
                         </LinearGradientBrush>
                     </StackPanel.Background>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
-                        <Button x:Name="RegisterButton" Content="Регистрация" Width="85" Height="30" Margin="5" Click="RegisterButton_Click"
+                        <Button x:Name="FormRegisterButton" Content="Регистрация" Width="85" Height="30" Margin="5" Click="FormRegisterButton_Click"
                 Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
-                        <Button x:Name="LoginButton" Content="Авторизация" Width="85" Height="30" Margin="5" Click="LoginButton_Click"
+                        <Button x:Name="FormLoginButton" Content="Авторизация" Width="85" Height="30" Margin="5" Click="FormLoginButton_Click"
                 Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
                     </StackPanel>
-                    <StackPanel x:Name="RegisterPanel" Visibility="Collapsed" Margin="10">
-                        <TextBox x:Name="RegisterName" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Имя" />
-                        <TextBox x:Name="RegisterEmail" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Почта"/>
-                        <TextBox x:Name="RegisterPassword" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Пароль"/>
-                        <TextBox x:Name="RegisterConfirmPassword" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Повторите пароль"/>
-                        <Button Content="Зарегистрироваться" Width="150"  Height="30" Margin="5" Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
+                    <StackPanel x:Name="RegisterPanel" Visibility="Collapsed" Loaded="RegisterPanel_Loaded" Margin="10">
+                        <TextBlock Text="Логин" Margin="10 0 0 0"/>
+                        <TextBox x:Name="RegisterName" Margin="5" Height="20" />
+                        <TextBlock Text="Пароль" Margin="10 0 0 0"/>
+                        <PasswordBox x:Name="RegisterPassword" Margin="5" Height="20"/>
+                        <TextBox Name="RegisterPasswordText" Margin="5" Height="20" Visibility="Collapsed"/>
+                        <TextBlock Text="Повторите пароль" Margin="10 0 0 0"/>
+                        
+                        <Button x:Name="Otkrglaz11" Click="Otkrglaz11_Click" Margin="163 -63 0 0" Width="24" Height="16" Background="White" BorderBrush="White">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="10">      
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid>
+                                <Image x:Name="Zakrglaz1" Source="/images/glaz_s8kpwxe8725r_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                                <Image x:Name="Otkrglaz1" Visibility="Collapsed" Source="/images/glaz_ckibzn8clgm1_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                            </Grid>
+                        </Button>
+                        <PasswordBox x:Name="RegisterConfirmPassword" Margin="5" Height="20" />
+                        <TextBox Name="RegisterConfirmPasswordText" Margin="5" Height="20" Visibility="Collapsed"/>
+                        <Button x:Name="Otkrglaz22" Click="Otkrglaz22_Click" Margin="163 -30 0 0" Width="24" Height="16" Background="White" BorderBrush="White">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="10">      
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid>
+                                <Image x:Name="Zakrglaz2" Source="/images/glaz_s8kpwxe8725r_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                                <Image x:Name="Otkrglaz2" Visibility="Collapsed" Source="/images/glaz_ckibzn8clgm1_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="Register" Click="Register_Click" Content="Зарегистрироваться" Width="150"  Height="30" Margin="5" Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
                     </StackPanel>
-                    <StackPanel x:Name="LoginPanel" Visibility="Collapsed" Margin="10">
-                        <TextBox x:Name="LoginName" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Имя"/>
-                        <TextBox x:Name="LoginPassword" Margin="5" Height="20" Style="{StaticResource PlaceholderTextBoxStyle}" Tag="Пароль"/>
-                        <Button Content="Войти"  Height="30" Width="150" Margin="5" Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
+
+                    <StackPanel x:Name="LoginPanel" Loaded="LoginPanel_Loaded" Visibility="Collapsed" Margin="10">
+                        <TextBlock Text="Логин" Margin="10 0 0 0"/>
+                        <TextBox x:Name="LoginName" Margin="5" Height="20" />
+                        <TextBlock Text="Пароль" Margin="10 0 0 0"/>
+                        <PasswordBox x:Name="LoginPassword" Margin="5" Height="20" />
+                        <TextBox Name="LoginPasswordText" Margin="5" Height="20" Visibility="Collapsed"/>
+                        <Button x:Name="Otkrglaz33" Click="Otkrglaz33_Click" Margin="163 -30 0 0" Width="24" Height="16" Background="White" BorderBrush="White">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="10">      
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Grid>
+                                <Image x:Name="Zakrglaz3" Source="/images/glaz_s8kpwxe8725r_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                                <Image x:Name="Otkrglaz3" Visibility="Collapsed" Source="/images/glaz_ckibzn8clgm1_128.png" Height="17" Width="17" Margin="-162,-1,-163,0" Grid.Column="3" />
+                            </Grid>
+                        </Button>
+                        <Button x:Name="Avtoriz" Click="Avtoriz_Click" Content="Войти"  Height="30" Width="150" Margin="5" Style="{StaticResource RoundedButtonStyle}" FontSize="13"/>
                     </StackPanel>
+
                 </StackPanel>
 
             </Grid>

@@ -8,12 +8,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
+using System.Data.SqlClient;
+using System.Data;
+using System.Windows.Forms;
+
 
 namespace kursovaya
 {
 	
 	public partial class MainWindow : Window
 	{
+
+		DataBase dataBase = new DataBase();
+
 		private List<string> imagePaths = new List<string>
 		{
 			"pack://application:,,,/images/banner1.jpg",
@@ -260,18 +267,178 @@ namespace kursovaya
 			parodontax.Show(); 
 			Close();
 		}
-		private void RegisterButton_Click(object sender, RoutedEventArgs e)
+		private void FormRegisterButton_Click(object sender, RoutedEventArgs e)
 		{
 			RegisterPanel.Visibility = Visibility.Visible;
 			LoginPanel.Visibility = Visibility.Collapsed;
 		}
 
-		private void LoginButton_Click(object sender, RoutedEventArgs e)
+		private void FormLoginButton_Click(object sender, RoutedEventArgs e)
 		{
 			LoginPanel.Visibility = Visibility.Visible;
 			RegisterPanel.Visibility = Visibility.Collapsed;
 		}
-		
-		
+
+		private void Register_Click(object sender, RoutedEventArgs e)
+		{
+			var login = RegisterName.Text;
+			var password = RegisterPassword.Password;
+
+			string querystring = $"insert into register(login_user, password_user) values ('{login}', '{password}')";
+
+			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
+
+			dataBase.openConnection();
+
+			if (command.ExecuteNonQuery() == 1)
+			{
+				System.Windows.MessageBox.Show("Аккаунт успешно создан!", "Успех!");
+				
+			}
+			else
+			{
+				System.Windows.MessageBox.Show("Аккаунт не создан!");
+			}
+			dataBase.closeConnection();
+			
+
+
+
+		}
+
+		private Boolean checkuser()
+		{
+			var loginUser = LoginName.Text;
+			var passUser = LoginPassword.Password;
+			SqlDataAdapter adapter = new SqlDataAdapter();
+			DataTable table = new DataTable();
+			string querystring = $"select id_user, login_user, password_user from register where login_user = '{loginUser}' and password_user = '{passUser}'";
+
+			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
+
+			adapter.SelectCommand = command;
+			adapter.Fill(table);
+
+			if(table.Rows.Count > 0)
+			{
+				System.Windows.MessageBox.Show("Пользователь уже существует!");
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		private void RegisterPanel_Loaded(object sender, RoutedEventArgs e)
+		{	
+			RegisterName.MaxLength = 50;
+			RegisterPassword.MaxLength = 16;
+			RegisterConfirmPassword.MaxLength = 16;
+
+		}
+
+		private void Otkrglaz11_Click(object sender, RoutedEventArgs e)
+		{
+			if (RegisterPassword.Visibility == Visibility.Visible)
+			{
+				// Переключаемся на TextBox и показываем пароль
+				RegisterPasswordText.Text = RegisterPassword.Password;
+				RegisterPassword.Visibility = Visibility.Collapsed;
+				RegisterPasswordText.Visibility = Visibility.Visible;
+				Zakrglaz1.Visibility = Visibility.Collapsed;
+				Otkrglaz1.Visibility = Visibility.Visible;
+
+			}
+			else
+			{
+				// Переключаемся обратно на PasswordBox
+				RegisterPassword.Password = RegisterPasswordText.Text;
+				RegisterPassword.Visibility = Visibility.Visible;
+				RegisterPasswordText.Visibility = Visibility.Collapsed;
+				Zakrglaz1.Visibility = Visibility.Visible;
+				Otkrglaz1.Visibility = Visibility.Collapsed;
+			}
+
+		}
+
+		private void Otkrglaz22_Click(object sender, RoutedEventArgs e)
+		{
+			if (RegisterConfirmPassword.Visibility == Visibility.Visible)
+			{
+				// Переключаемся на TextBox и показываем пароль
+				RegisterConfirmPasswordText.Text = RegisterConfirmPassword.Password;
+				RegisterConfirmPassword.Visibility = Visibility.Collapsed;
+				RegisterConfirmPasswordText.Visibility = Visibility.Visible;
+				Zakrglaz2.Visibility = Visibility.Collapsed;
+				Otkrglaz2.Visibility = Visibility.Visible;
+
+			}
+			else
+			{
+				// Переключаемся обратно на PasswordBox
+				RegisterConfirmPassword.Password = RegisterConfirmPasswordText.Text;
+				RegisterConfirmPassword.Visibility = Visibility.Visible;
+				RegisterConfirmPasswordText.Visibility = Visibility.Collapsed;
+				Zakrglaz2.Visibility = Visibility.Visible;
+				Otkrglaz2.Visibility = Visibility.Collapsed;
+			}
+
+		}
+
+		private void Avtoriz_Click(object sender, RoutedEventArgs e)
+		{
+			var loginUser = LoginName.Text;
+			var passUser = LoginPassword.Password;
+
+			SqlDataAdapter adapter = new SqlDataAdapter();
+			DataTable table = new DataTable();
+
+			string querystring = $"select id_user, login_user, password_user from register where login_user = '{loginUser}' and password_user = '{passUser}' ";
+
+			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
+
+			adapter.SelectCommand = command;
+			adapter.Fill(table);
+			if (table.Rows.Count == 1)
+			{
+				System.Windows.MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);
+
+			}
+			else
+			{
+				System.Windows.MessageBox.Show("Такого аккаунта не существует!", "Аккаунта не существует!!", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Warning);
+			}
+		}
+
+		private void Otkrglaz33_Click(object sender, RoutedEventArgs e)
+		{
+			if (LoginPassword.Visibility == Visibility.Visible)
+			{
+				// Переключаемся на TextBox и показываем пароль
+				LoginPasswordText.Text = LoginPassword.Password;
+				LoginPassword.Visibility = Visibility.Collapsed;
+				LoginPasswordText.Visibility = Visibility.Visible;
+				Zakrglaz3.Visibility = Visibility.Collapsed;
+				Otkrglaz3.Visibility = Visibility.Visible;
+
+			}
+			else
+			{
+				// Переключаемся обратно на PasswordBox
+				LoginPassword.Password = LoginPasswordText.Text;
+				LoginPassword.Visibility = Visibility.Visible;
+				LoginPasswordText.Visibility = Visibility.Collapsed;
+				Zakrglaz3.Visibility = Visibility.Visible;
+				Otkrglaz3.Visibility = Visibility.Collapsed;
+			}
+
+		}
+
+		private void LoginPanel_Loaded(object sender, RoutedEventArgs e)
+		{
+			LoginName.MaxLength = 50;
+			LoginPassword.MaxLength = 16;
+		}
 	}
 }

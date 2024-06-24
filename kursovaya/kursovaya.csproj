@@ -17,6 +17,7 @@
     <None Remove="banner1.jpg" />
     <None Remove="banner2.jpg" />
     <None Remove="geo.png" />
+    <None Remove="images\.png" />
     <None Remove="images\banner1.jpg" />
     <None Remove="images\banner2.jpg" />
     <None Remove="images\banner3.jpg" />
@@ -25,6 +26,8 @@
     <None Remove="images\doctor_2051565.png" />
     <None Remove="images\dozhd_g25k01etzi38_512.png" />
     <None Remove="images\first-aid-kit_16280537.png" />
+    <None Remove="images\glaz_ckibzn8clgm1_128.png" />
+    <None Remove="images\glaz_s8kpwxe8725r_128.png" />
     <None Remove="images\kashel_9himcrh36s9w_512.png" />
     <None Remove="images\lecarstvo.png" />
     <None Remove="images\lekarstva_cqhw4sy7e6ml_512.png" />
@@ -81,6 +84,12 @@
     <Resource Include="images\first-aid-kit_16280537.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="images\glaz_ckibzn8clgm1_128.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\glaz_s8kpwxe8725r_128.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\kashel_9himcrh36s9w_512.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -133,6 +142,7 @@
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
   <ItemGroup>
