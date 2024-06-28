@@ -302,18 +302,36 @@ namespace kursovaya
 		{
 			var login = RegisterName.Text;
 			var password = RegisterPassword.Password;
-			string querystring = $"insert into register(login_user, password_user) values ('{login}', '{password}')";
+			var confirmPassword = RegisterConfirmPassword.Password;
+			var password1 = RegisterPasswordText.Text;
+			var confirmPassword1 = RegisterConfirmPasswordText.Text;
+
+			// Проверка, совпадают ли пароли
+			if (password != confirmPassword || password1 != confirmPassword1)
+			{
+				System.Windows.MessageBox.Show("Пароли не совпадают! Пожалуйста, проверьте введенные пароли.", "Ошибка");
+				return;
+			}
+
+			// Запрос с возвратом сгенерированного id_user
+			string querystring = $"INSERT INTO register(login_user, password_user) OUTPUT INSERTED.id_user VALUES (@login, @password)";
 
 			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
+			command.Parameters.AddWithValue("@login", login);
+			command.Parameters.AddWithValue("@password", password);
 
 			dataBase.openConnection();
 
-			if (command.ExecuteNonQuery() == 1)
+			// Выполнение команды и получение сгенерированного id_user
+			var idUser = (int?)command.ExecuteScalar();
+
+			if (idUser.HasValue)
 			{
 				System.Windows.MessageBox.Show("Аккаунт успешно создан!", "Успех!");
 
 				CurrentUser.User = new kursovaya.Models.User
 				{
+					Id = idUser.Value, // Добавьте поле Id в модель User
 					Login = login,
 					Password = password
 				};
@@ -322,18 +340,16 @@ namespace kursovaya
 				AvtorizPanel.Visibility = Visibility.Collapsed;
 				user.Visibility = Visibility.Visible;
 				korzinaButton.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
 				System.Windows.MessageBox.Show("Аккаунт не создан!");
 			}
+
 			dataBase.closeConnection();
-			
-
-
-
 		}
+
+
 
 		private Boolean checkuser()
 		{
@@ -420,36 +436,53 @@ namespace kursovaya
 			var loginUser = LoginName.Text;
 			var passUser = LoginPassword.Password;
 
+			if (loginUser.Length < 5)
+			{
+				System.Windows.MessageBox.Show("Логин должен содержать не менее 5 символов!", "Ошибка");
+				return;
+			}
+
+			if (passUser.Length < 5)
+			{
+				System.Windows.MessageBox.Show("Пароль должен содержать не менее 5 символов!", "Ошибка");
+				return;
+			}
+
 			SqlDataAdapter adapter = new SqlDataAdapter();
 			DataTable table = new DataTable();
 
-			string querystring = $"select id_user, login_user, password_user from register where login_user = '{loginUser}' and password_user = '{passUser}' ";
+			string querystring = "SELECT id_user, login_user, password_user FROM register WHERE login_user = @loginUser AND password_user = @passUser";
 
 			SqlCommand command = new SqlCommand(querystring, dataBase.getSqlConnection());
+			command.Parameters.AddWithValue("@loginUser", loginUser);
+			command.Parameters.AddWithValue("@passUser", passUser);
 
 			adapter.SelectCommand = command;
 			adapter.Fill(table);
+
 			if (table.Rows.Count == 1)
 			{
-				System.Windows.MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Information);
+				System.Windows.MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
 				var row = table.Rows[0];
+
 				CurrentUser.User = new kursovaya.Models.User
 				{
+					Id = (int)row["id_user"],  
 					Login = (string)row["login_user"],
 					Password = (string)row["password_user"]
 				};
 				Authentific.UserAuthentic = true;
 				ObnovZagr();
 				AvtorizPanel.Visibility = Visibility.Collapsed;
-
 				user.Visibility = Visibility.Visible;
 				korzinaButton.Visibility = Visibility.Visible;
 			}
 			else
 			{
-				System.Windows.MessageBox.Show("Такого аккаунта не существует!", "Аккаунта не существует!!", MessageBoxButton.OK, (MessageBoxImage)MessageBoxIcon.Warning);
+				System.Windows.MessageBox.Show("Такого аккаунта не существует!", "Аккаунта не существует!!", MessageBoxButton.OK, MessageBoxImage.Warning);
 			}
 		}
+
 
 		private void Otkrglaz33_Click(object sender, RoutedEventArgs e)
 		{

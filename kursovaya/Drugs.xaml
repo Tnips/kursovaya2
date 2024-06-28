@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
         xmlns:local="clr-namespace:kursovaya"
         mc:Ignorable="d"
         Title="Drugs" Height="705" Width="1120"
@@ -11,7 +12,34 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <local:MedicationRepository/>
+    </Window.DataContext>
+
+
     <Window.Resources>
+        <local:MedicationRepository x:Key="medicationRepository"/>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FC4445" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+            <!-- Состояние при наведении -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
         <Style x:Key="OptionsPanelStyle" TargetType="Grid">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Background" Value="#FFC8FCEF"/>
@@ -139,6 +167,43 @@
                         <Ellipse Width="55" Height="55" Fill="#FC4445" Margin="10,-60,0,0"/>
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="640">
+                        <ItemsControl ItemsSource="{Binding Medications}" Height="430">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" BorderBrush="Black" BorderThickness="1" Margin="5" Width="150" Height="200">
+                                        <Grid>
+                                            <Image Source="{Binding Foto}" Stretch="UniformToFill" Margin="0,9,0,83"/>
+                                            <StackPanel VerticalAlignment="Top" Background="#CC000000" Margin="0,119,0,0" Height="69">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" TextWrapping="Wrap"
+MaxWidth="130"
+TextAlignment="Center"/>
+                                                <TextBlock Text="{Binding Price, StringFormat={}{0} руб.}" Foreground="White" TextAlignment="Center"/>
+                                            </StackPanel>
+
+                                            <Button x:Name="vKorzinu" Margin="108,0,3,-8" Height="38" Style="{StaticResource ButtonStyle}" VerticalAlignment="Bottom" Click="vKorzinu_Click">
+                                                <Button.Content>
+                                                    <Image Source="/images/shopping-cart_66867.png" Width="24" Height="24"/>
+                                                </Button.Content>
+                                            </Button>
+
+                                            <Button x:Name="detailsButton" Margin="-8,7,64,0" Height="27" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" Click="detailsButton_Click">
+                                                <Button.Content>
+                                                    <TextBlock Text="Подробнее" Foreground="Black" FontWeight="Bold" FontSize="12" TextAlignment="Center" />
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
                 </StackPanel>
             </Grid>
         </Border>

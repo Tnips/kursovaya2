@@ -15,6 +15,9 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+    
+    
+    
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Template">

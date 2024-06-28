@@ -54,6 +54,14 @@
     <None Remove="images\shopping-cart_66867.png" />
     <None Remove="images\sobachij_domik_38as4vhq3uzd_512.png" />
     <None Remove="images\sunglasses_1296563.png" />
+    <None Remove="images\tabletkainf\1.png" />
+    <None Remove="images\tabletkainf\2.png" />
+    <None Remove="images\tabletkainf\3.png" />
+    <None Remove="images\tabletkainf\4.png" />
+    <None Remove="images\tabletka\1%281%29.png" />
+    <None Remove="images\tabletka\2%282%29.png" />
+    <None Remove="images\tabletka\3%283%29.png" />
+    <None Remove="images\tabletka\4%284%29.png" />
     <None Remove="images\vitamin_12448688.png" />
     <None Remove="images\zheludok_w7rkm7ve986y_512.png" />
     <None Remove="images\zub_mynrfyqun1ir_512.png" />
@@ -61,6 +69,21 @@
     <None Remove="kosm.png" />
     <None Remove="medtech.png" />
     <None Remove="sunglasses_1296563.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\tabletkainf\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletkainf\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletkainf\4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletka\4(4).png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
@@ -181,6 +204,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\sunglasses_1296563.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletkainf\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletka\1(1).png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletka\2(2).png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="images\tabletka\3(3).png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="images\vitamin_12448688.png">

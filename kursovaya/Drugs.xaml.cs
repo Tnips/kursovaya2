@@ -20,10 +20,13 @@ namespace kursovaya
     /// </summary>
     public partial class Drugs : Window
     {
+
+
         public Drugs()
         {
             InitializeComponent();
 			ObnovZagr();
+			DataContext = new MedicationRepository();
 		}
 
 		private void ObnovZagr()
@@ -141,6 +144,32 @@ namespace kursovaya
 			User user = new User();
 			user.Show();
 			Close();
+		}
+
+		private void vKorzinu_Click(object sender, RoutedEventArgs e)
+		{
+			if(CurrentUser.User == null)
+			{
+				MessageBox.Show("Авторизуйтесь!", "Ошибка!", MessageBoxButton.OK);
+			}
+			else
+			{
+				MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
+			}
+		}
+
+		private void detailsButton_Click(object sender, RoutedEventArgs e)
+		{
+			Button button = sender as Button;
+			if (button != null)
+			{
+				Medication medication = button.DataContext as Medication;
+				if (medication != null)
+				{
+					MedicationDetailsWindow detailsWindow = new MedicationDetailsWindow(medication.Opisanie);
+					detailsWindow.ShowDialog();
+				}
+			}
 		}
 	}
 }

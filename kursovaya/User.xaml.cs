@@ -32,6 +32,7 @@ namespace kursovaya
 			{
 				user.Visibility = Visibility.Visible;
 				korzinaButton.Visibility = Visibility.Visible;
+				userLogin.Text = "Здраствуйте, " + CurrentUser.User.Login;
 
 			}
 			else
@@ -142,6 +143,15 @@ namespace kursovaya
 			User user = new User();
 			user.Show();
 			Close();
+		}
+
+		private void Vihod_Click(object sender, RoutedEventArgs e)
+		{
+			CurrentUser.User = null;
+			MainWindow home = new MainWindow();
+			home.Show();
+			this.Close();
+			
 		}
 	}
 }

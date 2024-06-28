@@ -1,0 +1,65 @@
+﻿<Window x:Class="kursovaya.MedicationDetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kursovaya"
+        mc:Ignorable="d"
+        Title="MedicationDetailsWindow" Height="480" Width="600"  WindowStartupLocation="CenterScreen"
+        Icon="/images/Logo.png"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+
+        <Style x:Key="OptionsPanelStyle" TargetType="Grid">
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Background" Value="#FFC8FCEF"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Width" To="200" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Width" To="60" Duration="0:0:0.2"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="0,0,0,29">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Background="#FF599CCC" BorderThickness="1" Grid.Row="0" Margin="0,0,0,336">
+            <Grid Background="#FF599CCC" Height="30" VerticalAlignment="Center" Margin="1,0,1,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="images/Logo.png" Height="30" VerticalAlignment="Center" Margin="7,0,11,0"/>
+                <TextBlock Text="BelPharm" VerticalAlignment="Center" Margin="0,0,913,0" Foreground="White" Grid.Column="1" FontFamily="Bernard MT Condensed" FontSize="15"/>
+                <Button Grid.Column="4" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="CloseWindow">
+                    <Path Data="M 0,0 L 10,10 M 0,10 L 10,0" Stroke="White" StrokeThickness="2"/>
+                </Button>
+            </Grid>
+        </Border>
+        <Image Name="OpisanieImage" Width="550" Margin="25,60,25,1" Grid.RowSpan="2"/>
+    </Grid>
+</Window>
