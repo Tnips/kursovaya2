@@ -43,7 +43,7 @@ namespace kursovaya
 				using (SqlConnection connection = new SqlConnection(connectionString))
 				{
 					// Измененный SQL запрос, чтобы выбрать 'name' вместо 'type_of'
-					string query = "SELECT name, price, for_what, opisanie, foto FROM tabletkadb WHERE type_of = 'Лекарственные препараты'";
+					string query = "SELECT id, name, price, for_what, opisanie, foto FROM tabletkadb WHERE type_of = 'Лекарственные препараты'";
 					SqlCommand command = new SqlCommand(query, connection);
 					connection.Open();
 					SqlDataReader reader = command.ExecuteReader();
@@ -53,6 +53,7 @@ namespace kursovaya
 						Medication medication = new Medication
 						{
 							// Используем 'name' вместо 'type_of'
+							Id = reader["id"].ToString(),
 							Name = reader["name"].ToString(),
 							Price = Convert.ToDecimal(reader["price"]),
 							ForWhat = reader["for_what"].ToString(),

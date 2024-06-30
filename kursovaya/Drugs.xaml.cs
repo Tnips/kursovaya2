@@ -1,6 +1,7 @@
 ﻿using kursovaya.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,8 +22,10 @@ namespace kursovaya
     public partial class Drugs : Window
     {
 
+		DataBase dataBase = new DataBase();
 
-        public Drugs()
+
+		public Drugs()
         {
             InitializeComponent();
 			ObnovZagr();
@@ -148,15 +151,102 @@ namespace kursovaya
 
 		private void vKorzinu_Click(object sender, RoutedEventArgs e)
 		{
-			if(CurrentUser.User == null)
+			if (CurrentUser.User == null)
 			{
 				MessageBox.Show("Авторизуйтесь!", "Ошибка!", MessageBoxButton.OK);
+				return;
+			}
+
+			var button = sender as Button;
+			var medication = button.DataContext as Medication;
+
+			if (medication == null)
+			{
+				MessageBox.Show("Не удалось получить информацию о товаре.", "Ошибка!", MessageBoxButton.OK);
+				return;
+			}
+
+			var userId = CurrentUser.User.Id;
+
+			// Check if the item already exists in the cart for this user
+			bool itemExistsInCart = false;
+			int cartItemId = 0;
+			string checkQuery = "SELECT KorzinaID, Quantity FROM korzina WHERE UserId = @userId AND MedicationID = @medicationId";
+			using (SqlConnection connection = new SqlConnection(dataBase.getStringConnection()))
+			{
+				SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+				checkCommand.Parameters.AddWithValue("@userId", userId);
+				checkCommand.Parameters.AddWithValue("@medicationId", medication.Id);
+				connection.Open();
+				SqlDataReader reader = checkCommand.ExecuteReader();
+				if (reader.Read())
+				{
+					itemExistsInCart = true;
+					cartItemId = (int)reader["KorzinaID"];
+				}
+			}
+
+			// If item exists, update quantity; otherwise, insert new entry
+			if (itemExistsInCart)
+			{
+				// Update quantity in the database
+				int newQuantity = GetCartItemQuantity(cartItemId) + 1;
+				dataBase.UpdateCartItemQuantity(cartItemId, newQuantity);
+				MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
 			}
 			else
 			{
-				MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
+				// Insert new item into the cart
+				string insertQuery = "INSERT INTO korzina (UserId, MedicationID, Quantity, Price, Foto) " +
+									 "VALUES (@userId, @medicationId, @quantity, @price, @foto)";
+				try
+				{
+					using (SqlConnection connection = new SqlConnection(dataBase.getStringConnection()))
+					{
+						SqlCommand command = new SqlCommand(insertQuery, connection);
+						command.Parameters.AddWithValue("@userId", userId);
+						command.Parameters.AddWithValue("@medicationId", medication.Id);
+						command.Parameters.AddWithValue("@quantity", 1); // Initial quantity is 1
+						command.Parameters.AddWithValue("@price", medication.Price);
+						command.Parameters.AddWithValue("@foto", medication.Foto);
+
+						connection.Open();
+						int rowsAffected = command.ExecuteNonQuery();
+
+						if (rowsAffected > 0)
+						{
+							MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
+						}
+						else
+						{
+							MessageBox.Show("Не удалось добавить товар в корзину.", "Ошибка!", MessageBoxButton.OK);
+						}
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show($"Ошибка при добавлении в корзину: {ex.Message}", "Ошибка", MessageBoxButton.OK);
+				}
 			}
 		}
+
+		// Helper method to get current quantity of a cart item
+		private int GetCartItemQuantity(int cartItemId)
+		{
+			string query = "SELECT Quantity FROM korzina WHERE KorzinaID = @cartItemId";
+			using (SqlConnection connection = new SqlConnection(dataBase.getStringConnection()))
+			{
+				SqlCommand command = new SqlCommand(query, connection);
+				command.Parameters.AddWithValue("@cartItemId", cartItemId);
+
+				connection.Open();
+				int quantity = (int)command.ExecuteScalar();
+				return quantity;
+			}
+		}
+
+
+
 
 		private void detailsButton_Click(object sender, RoutedEventArgs e)
 		{

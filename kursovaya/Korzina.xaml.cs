@@ -20,9 +20,11 @@ namespace kursovaya
     /// </summary>
     public partial class Korzina : Window
     {
+		DataBase data = new DataBase();
         public Korzina()
         {
             InitializeComponent();
+			DataContext = new KorzinaViewModel(data, CurrentUser.User.Id);
 			ObnovZagr();
 		}
 

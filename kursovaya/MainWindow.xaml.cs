@@ -436,17 +436,7 @@ namespace kursovaya
 			var loginUser = LoginName.Text;
 			var passUser = LoginPassword.Password;
 
-			if (loginUser.Length < 5)
-			{
-				System.Windows.MessageBox.Show("Логин должен содержать не менее 5 символов!", "Ошибка");
-				return;
-			}
 
-			if (passUser.Length < 5)
-			{
-				System.Windows.MessageBox.Show("Пароль должен содержать не менее 5 символов!", "Ошибка");
-				return;
-			}
 
 			SqlDataAdapter adapter = new SqlDataAdapter();
 			DataTable table = new DataTable();
