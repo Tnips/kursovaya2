@@ -11,7 +11,24 @@
         AllowsTransparency="True"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <local:MedicationRepository/>
+    </Window.DataContext>
+
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#FC4445" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="OptionsPanelStyle" TargetType="Grid">
             <Setter Property="Width" Value="60"/>
             <Setter Property="Background" Value="#FFC8FCEF"/>
@@ -139,6 +156,39 @@
                         <Ellipse Width="55" Height="55" Fill="#FC4445" Margin="10,-60,0,0"/>
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="425">
+                        <ItemsControl ItemsSource="{Binding Medications20}" Height="430" Width="645">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="10" BorderBrush="Black" BorderThickness="1" Margin="5" Width="150" Height="200">
+                                        <Grid>
+                                            <Image Source="{Binding Foto}" Stretch="UniformToFill" Margin="0,9,0,83"/>
+                                            <StackPanel VerticalAlignment="Top" Background="#CC000000" Margin="0,119,0,0" Height="69">
+                                                <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" TextWrapping="Wrap" MaxWidth="130" TextAlignment="Center"/>
+                                                <TextBlock Text="{Binding FormattedPrice}" Foreground="White" TextAlignment="Center"/>
+                                                <TextBlock Text="{Binding FormattedOriginalPrice}" Foreground="Red" TextAlignment="Center" TextDecorations="Strikethrough" Visibility="{Binding Akcii, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                            </StackPanel>
+                                            <Button x:Name="vKorzinu" Margin="108,0,3,-8" Height="38" Style="{StaticResource ButtonStyle}" VerticalAlignment="Bottom" Click="vKorzinu_Click" DataContext="{Binding}">
+                                                <Button.Content>
+                                                    <Image Source="/images/shopping-cart_66867.png" Width="24" Height="24"/>
+                                                </Button.Content>
+                                            </Button>
+                                            <Button x:Name="detailsButton" Margin="-8,7,64,0" Height="27" Style="{StaticResource ButtonStyle}" VerticalAlignment="Top" Click="detailsButton_Click">
+                                                <Button.Content>
+                                                    <TextBlock Text="Подробнее" Foreground="Black" FontWeight="Bold" FontSize="12" TextAlignment="Center" />
+                                                </Button.Content>
+                                            </Button>
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
                 </StackPanel>
             </Grid>
         </Border>
@@ -152,13 +202,7 @@
                         </Grid>
 
                     </Button>
-                    <Button x:Name="geo" Click="geo_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
-                        <Grid>
-                            <TextBlock Text="Аптеки" Width="99" Margin="58,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Image HorizontalAlignment="Left" Height="40" Width="45" Margin="-12,0,0,0" VerticalAlignment="Center" Source="images/placeholder_161667.png"/>
-                        </Grid>
-
-                    </Button>
+               
                     <Button x:Name="akcii" Click="akcii_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
 

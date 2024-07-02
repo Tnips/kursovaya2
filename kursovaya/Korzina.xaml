@@ -149,7 +149,7 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border CornerRadius="10" BorderBrush="Black" BorderThickness="1" Margin="5" Width="150" Height="200">
+                                    <Border CornerRadius="10" BorderBrush="#FFD1E6E5" BorderThickness="1" Margin="5" Width="150" Height="200" Background="#FFD1E6E5">
                                         <Grid>
                                             <Image Source="{Binding Foto}" Stretch="UniformToFill" Margin="0,9,0,83"/>
                                             <StackPanel VerticalAlignment="Top" Background="#CC000000" Margin="0,119,0,0" Height="69">
@@ -159,28 +159,7 @@
                                             </StackPanel>
 
                                             <!-- Buttons for Cart Interaction -->
-                                            <Button x:Name="increaseButton" Content="+" Margin="-40,140,0,0" Height="20" Width="20" VerticalAlignment="Top"
-                                Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                CommandParameter="{Binding}">
-                                                <Button.Style>
-                                                    <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border Background="White" CornerRadius="10">
-                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                                    </Border>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Style>
-                                                </Button.Style>
-                                                <Button.Effect>
-                                                    <DropShadowEffect ShadowDepth="2"/>
-                                                </Button.Effect>
-                                            </Button>
-
-                                            <Button x:Name="decreaseButton" Content="-" Margin="40,140,0,0" Height="20" Width="20" VerticalAlignment="Top"
+                                            <Button x:Name="decreaseButton" Content="-" Height="20" Width="20" Margin="-40 110 0 0"
                                 Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
                                                 <Button.Style>
@@ -201,9 +180,70 @@
                                                 </Button.Effect>
                                             </Button>
 
-                                            <Button x:Name="deleteButton" Content="Удалить" Margin="0,170,0,0" Height="20" Width="80" VerticalAlignment="Top"
+                                            <!-- Текстовое поле для отображения количества -->
+                                            <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Margin="0 110 0 0" Width="30" Background="White"/>
+
+                                            <!-- Кнопка увеличения количества -->
+                                            <Button x:Name="increaseButton" Content="+" Height="20" Width="20" Margin="40 110 0 0"
+                                Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                CommandParameter="{Binding}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="White" CornerRadius="10">
+                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                                <Button.Effect>
+                                                    <DropShadowEffect ShadowDepth="2"/>
+                                                </Button.Effect>
+                                            </Button>
+
+                                            <!-- Кнопка Заказать -->
+                                            <Button x:Name="orderButton" Content="Заказать" Margin="65,173,0,0" Height="20" Width="60" VerticalAlignment="Top" 
+                                                    Command="{Binding DataContext.OrderItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                    CommandParameter="{Binding}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="#FF599CCC" CornerRadius="5">
+                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
+                                                <Button.Effect>
+                                                    <DropShadowEffect ShadowDepth="2"/>
+                                                </Button.Effect>
+                                            </Button>
+
+                                            <!-- Кнопка Удалить -->
+                                            <Button x:Name="deleteButton" Content="Удалить" Margin="-75,173,0,0" Height="20" Width="60" VerticalAlignment="Top"
                                 Command="{Binding DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
+                                                <Button.Style>
+                                                    <Style TargetType="Button">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="Button">
+                                                                    <Border Background="#FF599CCC" CornerRadius="5">
+                                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                    </Border>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </Button.Style>
                                                 <Button.Effect>
                                                     <DropShadowEffect ShadowDepth="2"/>
                                                 </Button.Effect>
@@ -320,7 +360,7 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
-            
+
             <!--карточки корзины-->
         </Grid>
 

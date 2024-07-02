@@ -78,12 +78,6 @@ namespace kursovaya
 			Close();
 		}
 
-		private void geo_Click(object sender, RoutedEventArgs e)
-		{
-			Geo geo = new Geo();
-			geo.Show();
-			Close();
-		}
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
 		{
@@ -158,8 +152,13 @@ namespace kursovaya
 			}
 
 			var button = sender as Button;
-			var medication = button.DataContext as Medication;
+			if (button == null)
+			{
+				MessageBox.Show("Не удалось получить информацию о кнопке.", "Ошибка!", MessageBoxButton.OK);
+				return;
+			}
 
+			var medication = button.DataContext as MedicationRepository.Medication;
 			if (medication == null)
 			{
 				MessageBox.Show("Не удалось получить информацию о товаре.", "Ошибка!", MessageBoxButton.OK);
@@ -168,7 +167,10 @@ namespace kursovaya
 
 			var userId = CurrentUser.User.Id;
 
-			// Check if the item already exists in the cart for this user
+			// Определяем, какую цену использовать
+			decimal priceToUse = medication.Akcii ? medication.Twoprice : medication.Price;
+
+			// Проверка, существует ли товар в корзине для данного пользователя
 			bool itemExistsInCart = false;
 			int cartItemId = 0;
 			string checkQuery = "SELECT KorzinaID, Quantity FROM korzina WHERE UserId = @userId AND MedicationID = @medicationId";
@@ -184,19 +186,20 @@ namespace kursovaya
 					itemExistsInCart = true;
 					cartItemId = (int)reader["KorzinaID"];
 				}
+				reader.Close();
 			}
 
-			// If item exists, update quantity; otherwise, insert new entry
+			// Если товар существует, обновляем количество; иначе, вставляем новую запись
 			if (itemExistsInCart)
 			{
-				// Update quantity in the database
+				// Обновляем количество в базе данных
 				int newQuantity = GetCartItemQuantity(cartItemId) + 1;
 				dataBase.UpdateCartItemQuantity(cartItemId, newQuantity);
 				MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
 			}
 			else
 			{
-				// Insert new item into the cart
+				// Вставляем новый товар в корзину
 				string insertQuery = "INSERT INTO korzina (UserId, MedicationID, Quantity, Price, Foto) " +
 									 "VALUES (@userId, @medicationId, @quantity, @price, @foto)";
 				try
@@ -206,8 +209,8 @@ namespace kursovaya
 						SqlCommand command = new SqlCommand(insertQuery, connection);
 						command.Parameters.AddWithValue("@userId", userId);
 						command.Parameters.AddWithValue("@medicationId", medication.Id);
-						command.Parameters.AddWithValue("@quantity", 1); // Initial quantity is 1
-						command.Parameters.AddWithValue("@price", medication.Price);
+						command.Parameters.AddWithValue("@quantity", 1); // Начальное количество равно 1
+						command.Parameters.AddWithValue("@price", priceToUse);
 						command.Parameters.AddWithValue("@foto", medication.Foto);
 
 						connection.Open();
@@ -230,18 +233,16 @@ namespace kursovaya
 			}
 		}
 
-		// Helper method to get current quantity of a cart item
 		private int GetCartItemQuantity(int cartItemId)
 		{
+			// Метод для получения количества товара в корзине по идентификатору товара
 			string query = "SELECT Quantity FROM korzina WHERE KorzinaID = @cartItemId";
 			using (SqlConnection connection = new SqlConnection(dataBase.getStringConnection()))
 			{
 				SqlCommand command = new SqlCommand(query, connection);
 				command.Parameters.AddWithValue("@cartItemId", cartItemId);
-
 				connection.Open();
-				int quantity = (int)command.ExecuteScalar();
-				return quantity;
+				return (int)command.ExecuteScalar();
 			}
 		}
 
@@ -253,7 +254,7 @@ namespace kursovaya
 			Button button = sender as Button;
 			if (button != null)
 			{
-				Medication medication = button.DataContext as Medication;
+				MedicationRepository.Medication medication = button.DataContext as MedicationRepository.Medication;
 				if (medication != null)
 				{
 					MedicationDetailsWindow detailsWindow = new MedicationDetailsWindow(medication.Opisanie);
@@ -261,5 +262,6 @@ namespace kursovaya
 				}
 			}
 		}
+
 	}
 }

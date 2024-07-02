@@ -1,0 +1,146 @@
+﻿<Window x:Class="kursovaya.Zakaz"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kursovaya"
+        mc:Ignorable="d"
+        Title="Zakaz" Height="290" Width="290"  WindowStartupLocation="CenterScreen"
+        Icon="/images/Logo.png"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Стиль для текстовых подсказок в TextBox -->
+        <Style x:Key="HintTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Visibility" Value="Collapsed"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Text.Length, RelativeSource={RelativeSource AncestorType=TextBox}}" Value="0">
+                    <Setter Property="Visibility" Value="Visible"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для TextBox с текстовыми подсказками -->
+        <Style x:Key="HintedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                                <TextBlock Style="{StaticResource HintTextBlockStyle}"
+                                           Text="{TemplateBinding Tag}"
+                                           Margin="5,0"
+                                           Foreground="Gray"
+                                           VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter TargetName="PART_ContentHost" Property="Visibility" Value="Visible"/>
+
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+    </Window.Resources>
+
+    <Grid Margin="0,0,0,70">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Заголовок -->
+        <Border Background="#FF599CCC" BorderThickness="1" Grid.Row="0" Margin="0,0,0,336">
+            <Grid Background="#FF599CCC" Height="30" VerticalAlignment="Center" Margin="1,0,-1,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="images/Logo.png" Height="30" VerticalAlignment="Center" Margin="7,0,11,0"/>
+                <TextBlock Text="BelPharm" VerticalAlignment="Center" Margin="0,0,138,0" Foreground="White" Grid.Column="1" FontFamily="Bernard MT Condensed" FontSize="15"/>
+                <Button Grid.Column="4" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="CloseWindow">
+                    <Path Data="M 0,0 L 10,10 M 0,10 L 10,0" Stroke="White" StrokeThickness="2"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Контент заказа -->
+        <Grid Margin="20,-8,-290,132">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto" MinHeight="27.96"/>
+                <RowDefinition Height="Auto" MinHeight="59.96"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок "Заказ товара" -->
+            <TextBlock x:Name="TextBlockNameDrag"  Margin="10,0,60,43" FontSize="20" FontWeight="Bold" Grid.RowSpan="2"/>
+
+            <!-- Поле для ввода даты -->
+
+            <!-- Поле для ввода номера карты -->
+            <TextBox x:Name="CardNumberTextBox" Grid.Row="2" Margin="12,5,348,5" MaxLength="19" TextAlignment="Left" 
+                 Text="{Binding CardNumber, UpdateSourceTrigger=PropertyChanged}"
+                 Style="{StaticResource HintedTextBoxStyle}" Tag="Номер карты (XXXX XXXX XXXX XXXX)"
+                 PreviewTextInput="CardNumberTextBox_PreviewTextInput"
+                 TextChanged="CardNumberTextBox_TextChanged" />
+
+
+            <TextBox x:Name="MonthTextBox" Grid.Row="3" Margin="15,5,520,5" MaxLength="2" TextAlignment="Left" 
+         Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
+         Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="01"/>
+
+
+
+            <TextBlock Text="/" Grid.Row="3" Margin="39,5,504,5" TextAlignment="Center" />
+
+            <TextBox x:Name="DayTextBox" Grid.Row="3" Margin="58,5,477,5" MaxLength="2" TextAlignment="Left" 
+                     Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="22" />
+
+
+            <!-- Поле для ввода последних трех цифр карты -->
+            <TextBox x:Name="CvcTextBox" Grid.Row="3" Margin="172,5,350,5" MaxLength="3" TextAlignment="Left" 
+                     Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="CVC" />
+
+            <!-- Поле для ввода названия аптеки -->
+            <TextBox Grid.Row="4" Margin="12,5,348,5" TextAlignment="Left" 
+                     Text="{Binding PharmacyName, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{StaticResource HintedTextBoxStyle}" Tag="Название аптеки доставки" />
+
+            <!-- Поле для ввода номера телефона -->
+            <TextBox x:Name="PhoneNumberTextBox" Grid.Row="5" Margin="12,5,348,5" TextAlignment="Left" MaxLength="22"
+                 Text="+375 "
+                 Style="{StaticResource HintedTextBoxStyle}" Tag="+375 (__) ___-__-__"
+                 PreviewTextInput="PhoneNumberTextBox_PreviewTextInput"
+                 TextChanged="PhoneNumberTextBox_TextChanged" />
+
+
+
+            <!-- Кнопки Заказать и Отмена -->
+            <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10,20,10,20">
+                <Button x:Name="OrderButton" Content="Заказать" Width="100" Margin="0,0,20,0" Click="OrderButton_Click"/>
+                <Button x:Name="CancelButton" Content="Отмена" Width="100" Click="CancelButton_Click" />
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</Window>

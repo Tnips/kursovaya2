@@ -14,6 +14,7 @@ namespace kursovaya.Models
 		public int UserId { get; set; }
 		public int ProductId { get; set; }
 		private int _quantity;
+		private string _name;
 		public int Quantity
 		{
 			get { return _quantity; }
@@ -31,7 +32,16 @@ namespace kursovaya.Models
 
 		// Добавленные свойства для XAML привязки
 		public string Foto { get; set; } // предположим, что это строка с URL фото товара
-		public string Name { get; set; } // имя или описание товара
+		public string Name 
+		{ 
+			get { return _name; }
+			set
+			{
+				_name = value;
+				OnPropertyChanged(nameof(Name));
+			}
+				
+		} // имя или описание товара
 		public decimal TotalPrice => Price * Quantity;
 
 		protected void OnPropertyChanged(string propertyName)

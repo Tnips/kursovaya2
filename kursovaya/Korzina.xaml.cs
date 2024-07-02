@@ -144,5 +144,31 @@ namespace kursovaya
 			user.Show();
 			Close();
 		}
+
+		private void orderButton_Click(object sender, RoutedEventArgs e)
+		{
+			MessageBox.Show("Button clicked!"); // Debugging line to ensure the method is called
+
+			if (sender is Button orderButton)
+			{
+				if (orderButton.DataContext is CartItem selectedItem)
+				{
+					string itemName = selectedItem.Name;
+					Zakaz zakaz = new Zakaz(itemName);
+					zakaz.ShowDialog();
+					Close();
+				}
+				else
+				{
+					MessageBox.Show("DataContext is not a CartItem"); // Debugging line
+				}
+			}
+			else
+			{
+				MessageBox.Show("Sender is not a Button"); // Debugging line
+			}
+		}
+
+
 	}
 }

@@ -15,6 +15,8 @@ namespace kursovaya
 		public string? Foto { get; set; }
 		public string? Opisanie { get; set; }
 		public string? ForWhat { get; set; }
+		public decimal Twoprice { get; set; }
+		public bool Akcii { get; set; }
 
 
 	}

@@ -118,6 +118,7 @@ namespace kursovaya
 
 		private void drugs_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Лекарственные препараты");
 			Drugs drugs = new Drugs();
 			drugs.Show();
 			Close();
@@ -125,6 +126,7 @@ namespace kursovaya
 
 		private void aptechka_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Аптечка");
 			Aptechka aptechka = new Aptechka();
 			aptechka.Show();
 			Close();
@@ -132,6 +134,7 @@ namespace kursovaya
 
 		private void bad_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Витамины и БАДы");
 			Bad bad = new Bad();
 			bad.Show();
 			Close();
@@ -139,6 +142,7 @@ namespace kursovaya
 
 		private void medtech_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Медицинская техника");
 			MedTech medtech = new MedTech();
 			medtech.Show(); Close();
 			Close();
@@ -146,6 +150,7 @@ namespace kursovaya
 
 		private void optica_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Оптика");
 			Optica optica = new Optica();
 			optica.Show();
 			Close();
@@ -154,6 +159,7 @@ namespace kursovaya
 
 		private void kosm_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Гигиена и косметика");
 			Kosm kosm = new Kosm();
 			kosm.Show();
 			Close();
@@ -162,6 +168,7 @@ namespace kursovaya
 
 		private void momandbaby_Click(object sender, RoutedEventArgs e)
 		{
+			UpdateMedications("Мама и малыш");
 			MomandBaby momandBaby = new MomandBaby();
 			momandBaby.Show();
 			Close();
@@ -509,6 +516,15 @@ namespace kursovaya
 			User user = new User();
 			user.Show();
 			Close();
+		}
+
+		private void UpdateMedications(string type)
+		{
+			var repository = DataContext as MedicationRepository;
+			if (repository != null)
+			{
+				repository.Medications1 = repository.GetMedicationsOfType(type);
+			}
 		}
 	}
 }
