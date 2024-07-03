@@ -140,8 +140,8 @@
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
 
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="640" Height="425">
-                        <ItemsControl ItemsSource="{Binding CartItems}" Height="430">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="668" Height="425">
+                        <ItemsControl ItemsSource="{Binding CartItems}" Height="1845">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />
@@ -149,17 +149,17 @@
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border CornerRadius="10" BorderBrush="#FFD1E6E5" BorderThickness="1" Margin="5" Width="150" Height="200" Background="#FFD1E6E5">
+                                    <Border CornerRadius="10" BorderBrush="#FFD1E6E5" BorderThickness="1" Margin="5" Width="150" Height="220" Background="#FFD1E6E5">
                                         <Grid>
                                             <Image Source="{Binding Foto}" Stretch="UniformToFill" Margin="0,9,0,83"/>
-                                            <StackPanel VerticalAlignment="Top" Background="#CC000000" Margin="0,119,0,0" Height="69">
+                                            <StackPanel VerticalAlignment="Top" Background="#CC000000" Margin="0,119,0,0" Height="80">
                                                 <TextBlock Text="{Binding Name}" Foreground="White" FontWeight="Bold" TextWrapping="Wrap"
                                        MaxWidth="130" TextAlignment="Center"/>
-                                                <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} руб.}" Foreground="White" TextAlignment="Center" Margin="0,-10,0,0"/>
+                                                <TextBlock Text="{Binding TotalPrice, StringFormat={}{0} руб.}" Foreground="White" TextAlignment="Center" Margin="0,0,0,0"/>
                                             </StackPanel>
 
                                             <!-- Buttons for Cart Interaction -->
-                                            <Button x:Name="decreaseButton" Content="-" Height="20" Width="20" Margin="-40 110 0 0"
+                                            <Button x:Name="decreaseButton" Content="-" Height="20" Width="20" Margin="-40 140 0 0"
                                 Command="{Binding DataContext.DecreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
                                                 <Button.Style>
@@ -181,10 +181,10 @@
                                             </Button>
 
                                             <!-- Текстовое поле для отображения количества -->
-                                            <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Margin="0 110 0 0" Width="30" Background="White"/>
+                                            <TextBlock Text="{Binding Quantity}" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" Margin="0 140 0 0" Width="30" Background="White"/>
 
                                             <!-- Кнопка увеличения количества -->
-                                            <Button x:Name="increaseButton" Content="+" Height="20" Width="20" Margin="40 110 0 0"
+                                            <Button x:Name="increaseButton" Content="+" Height="20" Width="20" Margin="40 140 0 0"
                                 Command="{Binding DataContext.IncreaseQuantityCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
                                                 <Button.Style>
@@ -206,10 +206,8 @@
                                             </Button>
 
                                             <!-- Кнопка Заказать -->
-                                            <Button x:Name="orderButton" Content="Заказать" Margin="65,173,0,0" Height="20" Width="60" VerticalAlignment="Top" 
-                                                    Command="{Binding DataContext.OrderItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                    CommandParameter="{Binding}">
-                                                <Button.Style>
+                                            <Button x:Name="orderButton" Content="Заказать" Margin="65,193,0,0" Height="20" Width="60" VerticalAlignment="Top" Click="orderButton_Click">
+                                            <Button.Style>
                                                     <Style TargetType="Button">
                                                         <Setter Property="Template">
                                                             <Setter.Value>
@@ -228,7 +226,7 @@
                                             </Button>
 
                                             <!-- Кнопка Удалить -->
-                                            <Button x:Name="deleteButton" Content="Удалить" Margin="-75,173,0,0" Height="20" Width="60" VerticalAlignment="Top"
+                                            <Button x:Name="deleteButton" Content="Удалить" Margin="-75,193,0,0" Height="20" Width="60" VerticalAlignment="Top"
                                 Command="{Binding DataContext.DeleteCartItemCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                 CommandParameter="{Binding}">
                                                 <Button.Style>
@@ -268,13 +266,7 @@
                         </Grid>
 
                     </Button>
-                    <Button x:Name="geo" Click="geo_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
-                        <Grid>
-                            <TextBlock Text="Аптеки" Width="99" Margin="58,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Image HorizontalAlignment="Left" Height="40" Width="45" Margin="-12,0,0,0" VerticalAlignment="Center" Source="images/placeholder_161667.png"/>
-                        </Grid>
-
-                    </Button>
+                   
                     <Button x:Name="akcii" Click="akcii_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
 

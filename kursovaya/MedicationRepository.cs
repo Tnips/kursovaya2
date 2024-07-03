@@ -268,6 +268,18 @@ namespace kursovaya
 			}
 		}
 
+		private ObservableCollection<Medication> medications24;
+		public ObservableCollection<Medication> Medications24
+		{
+			get { return medications24; }
+			set
+			{
+				medications24 = value;
+				OnPropertyChanged(nameof(Medications24));
+			}
+		}
+
+
 		private string connectionString = @"Data Source=DESKTOP-AOF7V3Q;Initial Catalog=MedDB;Integrated Security=True";
 
 		public MedicationRepository()
@@ -296,6 +308,7 @@ namespace kursovaya
 			Medications21 = GetMedicationsOfType("CeraVe");
 			Medications22 = GetMedicationsOfType("Sensodyne");
 			Medications23 = GetMedicationsOfType("PARODONTAX");
+			Medications24 = GetMedicationsForAkcii();
 
 		}
 
@@ -386,6 +399,47 @@ namespace kursovaya
 			return medications1;
 		}
 
+		public ObservableCollection<Medication> GetMedicationsForAkcii()
+		{
+			ObservableCollection<Medication> medications23 = new ObservableCollection<Medication>();
+
+			try
+			{
+				using (SqlConnection connection = new SqlConnection(connectionString))
+				{
+					string query = $"SELECT id, name, price, for_what, twoprice, akcii, opisanie, foto FROM tabletkadb WHERE akcii = '1'";
+					SqlCommand command = new SqlCommand(query, connection);
+					connection.Open();
+					SqlDataReader reader = command.ExecuteReader();
+
+					while (reader.Read())
+					{
+						Medication medications = new Medication
+						{
+							Id = reader["id"].ToString(),
+							Name = reader["name"].ToString(),
+							Price = Convert.ToDecimal(reader["price"]),
+							ForWhat = reader["for_what"].ToString(),
+							Foto = reader["foto"].ToString(),
+							Opisanie = reader["opisanie"].ToString(),
+							Twoprice = Convert.ToDecimal(reader["twoprice"]),
+							Akcii = Convert.ToBoolean(reader["akcii"])
+						};
+
+						medications23.Add(medications);
+					}
+
+					reader.Close();
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show($"An error occurred: {ex.Message}");
+			}
+
+			return medications23;
+		}
+
 		public class Medication : INotifyPropertyChanged
 		{
 			private decimal price;
@@ -397,6 +451,10 @@ namespace kursovaya
 			public string ForWhat { get; set; }
 			public string Foto { get; set; }
 			public string Opisanie { get; set; }
+			public int KorzinaID { get; set; }
+			public int UserID { get; set; }
+			public int MedicationID { get; set; }
+			public int Quantity { get; set; }
 
 			public decimal Price
 			{

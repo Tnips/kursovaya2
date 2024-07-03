@@ -31,7 +31,7 @@ namespace kursovaya
 			IncreaseQuantityCommand = new RelayCommand<CartItemModel>(IncreaseQuantity);
 			DecreaseQuantityCommand = new RelayCommand<CartItemModel>(DecreaseQuantity);
 			DeleteCartItemCommand = new RelayCommand<CartItemModel>(DeleteCartItem);
-			OrderItemCommand = new RelayCommand<CartItemModel>(OrderItem);
+			//OrderItemCommand = new RelayCommand<CartItemModel>(OrderItem);
 		}
 
 		// Метод для загрузки товаров из базы данных
@@ -61,20 +61,21 @@ namespace kursovaya
 		}
 
 		// Метод для удаления товара из корзины
-		private void DeleteCartItem(CartItemModel item)
+		public void DeleteCartItem(CartItemModel item)
 		{
 			_database.DeleteCartItem(item.Id);
 			CartItems.Remove(item); // Удаление товара из коллекции
 			OnPropertyChanged(nameof(CartItems)); // Уведомление об изменении коллекции
 		}
 
-		private void OrderItem(CartItemModel cartItem)
-		{
-			if (cartItem != null)
-			{
-				Zakaz zakaz = new Zakaz(cartItem.Name);
-				zakaz.ShowDialog();
-			}
-		}
+		//private void OrderItem(CartItemModel cartItem)
+		//{
+		//	if (cartItem != null)
+		//	{
+		//		Zakaz zakaz = new Zakaz(cartItem);
+		//		zakaz.ShowDialog();
+		//	}
+		//}
+
 	}
 }

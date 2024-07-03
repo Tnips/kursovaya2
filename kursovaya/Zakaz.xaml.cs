@@ -14,19 +14,25 @@ using System.Data.SqlClient;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
+using System.Collections.ObjectModel;
 
 namespace kursovaya
 {
-    /// <summary>
-    /// Логика взаимодействия для Zakaz.xaml
-    /// </summary>
-    public partial class Zakaz : Window
-    {
-		public Zakaz(string nameDrug)
+	/// <summary>
+	/// Логика взаимодействия для Zakaz.xaml
+	/// </summary>
+	public partial class Zakaz : Window
+	{
+		public static DataBase dataBase = new DataBase();
+		private CartItemModel _cartItem;
+		private KorzinaViewModel korzina = new KorzinaViewModel(dataBase, CurrentUser.User.Id);
+		public Zakaz(CartItemModel cardItem)
 		{
 			InitializeComponent();
+			_cartItem = cardItem;
+			DataContext = new ZakazViewModel();
+			tovarName.Text = "Заказ товара - " + cardItem.Name;
 
-			
 		}
 
 		private void CloseWindow(object sender, RoutedEventArgs e)
@@ -37,11 +43,7 @@ namespace kursovaya
 		private void CancelButton_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
-        }
-
-
-
-
+		}
 
 		private void PhoneNumberTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
 		{
@@ -153,22 +155,79 @@ namespace kursovaya
 
 		private void OrderButton_Click(object sender, RoutedEventArgs e)
 		{
+			// Получение данных из текстовых полей и комбобоксов
 			string card = CardNumberTextBox.Text;
 			string mes = MonthTextBox.Text;
-			string day = DayTextBox.Text;
+			string year = DayTextBox.Text; // Предполагается, что YearTextBox содержит последние две цифры года
 			string cvc = CvcTextBox.Text;
 			string number = PhoneNumberTextBox.Text;
+			string ul = UlComboBox.Text;
 
-			if (card.Length == 16 && mes.Length == 2 && day.Length == 2 &&
-				cvc.Length == 3 && number.Length == 19)
+			// Валидация всех полей перед продолжением
+			if (card.Length == 19 && mes.Length == 2 && year.Length == 2 &&
+				cvc.Length == 3 && number.Length == 19 && ul.Length != 0)
 			{
-				MessageBox.Show("Ваш заказ оформлен! Вам придет уведомление о доставке!", "Вам придет уведомление о доставке!", MessageBoxButton.OK);
+				// Показать сообщение об успешном заказе
+				CustomMessageBox.ShowMessage("Вам придет уведомление о доставке!", "Вам придет уведомление о доставке!");
+
+				// Закрыть текущее окно
 				Close();
+
+				// Вставка данных из 'korzina' в таблицу 'zakaz'
+				string query = "INSERT INTO zakaz (KorzinaID, UserID, MedicationID, Quantity, Price) " +
+							   "SELECT KorzinaID, UserID, MedicationID, Quantity, Price FROM korzina";
+
+				SqlCommand command = new SqlCommand(query, dataBase.getSqlConnection());
+
+				try
+				{
+					korzina.DeleteCartItem(_cartItem);
+					dataBase.openConnection();
+					int rowsAffected = command.ExecuteNonQuery();
+				}
+				catch (Exception ex)
+				{
+					CustomMessageBox.ShowMessage($"Ошибка при добавлении данных в таблицу zakaz: {ex.Message}", "Ошибка");
+				}
+				finally
+				{
+					dataBase.closeConnection();
+				}
 			}
 			else
 			{
-				MessageBox.Show("Заполните все поля корректно перед оформлением заказа.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+				// Показать сообщение об ошибке, если валидация не прошла
+				CustomMessageBox.ShowMessage("Заполните все поля корректно перед оформлением заказа.", "Ошибка");
 			}
+		}
+
+
+
+
+
+		private void MonthTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+		{
+			if (!char.IsDigit(e.Text, 0))  // Проверка, что введен символ является цифрой
+			{
+				e.Handled = true;
+				return;
+			}
+
+			TextBox textBox = sender as TextBox;
+			string currentText = textBox.Text.Insert(textBox.SelectionStart, e.Text);
+
+			// Проверяем, что текущая строка имеет правильный формат месяца (две цифры)
+			if (currentText.Length > 2 || (currentText.Length == 2 && (!int.TryParse(currentText, out int month) || month < 1 || month > 12)))
+			{
+				e.Handled = true;
+				return;
+			}
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			Close();
 		}
 	}
 }
+

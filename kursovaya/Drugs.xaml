@@ -169,7 +169,7 @@
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="420">
-                        <ItemsControl ItemsSource="{Binding Medications}" Height="425" Width="665">
+                        <ItemsControl ItemsSource="{Binding Medications}" Width="auto">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />

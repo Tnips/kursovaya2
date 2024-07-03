@@ -213,13 +213,7 @@
                         </Grid>
 
                     </Button>
-                    <Button x:Name="geo" Click="geo_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
-                        <Grid>
-                            <TextBlock Text="Аптеки" Width="99" Margin="58,12,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                            <Image HorizontalAlignment="Left" Height="40" Width="45" Margin="-12,0,0,0" VerticalAlignment="Center" Source="images/placeholder_161667.png"/>
-                        </Grid>
 
-                    </Button>
                     <Button x:Name="akcii" Click="akcii_Click" Width="200" Background="#FF34ABBA" Height="55" BorderBrush="#FF34ABBA">
                         <Grid>
 

@@ -15,6 +15,17 @@ namespace kursovaya.Models
 		public int ProductId { get; set; }
 		private int _quantity;
 		private string _name;
+
+		private bool _isOrdered = false;
+		public bool IsOrdered
+		{
+			get { return _isOrdered; }
+			set
+			{
+				_isOrdered = value;
+				OnPropertyChanged(nameof(IsOrdered));
+			}
+		}
 		public int Quantity
 		{
 			get { return _quantity; }
@@ -24,7 +35,7 @@ namespace kursovaya.Models
 				{
 					_quantity = value;
 					OnPropertyChanged(nameof(Quantity));
-					OnPropertyChanged(nameof(TotalPrice)); // Notify TotalPrice change
+					OnPropertyChanged(nameof(TotalPrice)); 
 				}
 			}
 		}

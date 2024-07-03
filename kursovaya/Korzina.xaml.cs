@@ -74,12 +74,7 @@ namespace kursovaya
 			Close();
 		}
 
-		private void geo_Click(object sender, RoutedEventArgs e)
-		{
-			Geo geo = new Geo();
-			geo.Show();
-			Close();
-		}
+
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
 		{
@@ -147,25 +142,25 @@ namespace kursovaya
 
 		private void orderButton_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show("Button clicked!"); // Debugging line to ensure the method is called
 
 			if (sender is Button orderButton)
 			{
-				if (orderButton.DataContext is CartItem selectedItem)
+				if (orderButton.DataContext is CartItemModel selectedItem)
 				{
-					string itemName = selectedItem.Name;
-					Zakaz zakaz = new Zakaz(itemName);
+					Zakaz zakaz = new Zakaz(selectedItem);
 					zakaz.ShowDialog();
-					Close();
+					Korzina korzina = new Korzina();
+					korzina.Show();
+					this.Close();
 				}
 				else
 				{
-					MessageBox.Show("DataContext is not a CartItem"); // Debugging line
+					CustomMessageBox.ShowMessage("DataContext is not a CartItem", "ok"); // Debugging line
 				}
 			}
 			else
 			{
-				MessageBox.Show("Sender is not a Button"); // Debugging line
+				CustomMessageBox.ShowMessage("Sender is not a Button", "ok"); // Debugging line
 			}
 		}
 

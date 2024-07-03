@@ -74,6 +74,12 @@ namespace kursovaya
 			Close();
 		}
 
+		private void user_Click(object sender, RoutedEventArgs e)
+		{
+			User user = new User();
+			user.Show();
+			Close();
+		}
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
 		{
@@ -125,38 +131,33 @@ namespace kursovaya
 			Close();
 
 		}
-
 		private void momandbaby_Click(object sender, RoutedEventArgs e)
 		{
 			MomandBaby momandBaby = new MomandBaby();
 			momandBaby.Show();
 			Close();
+
 		}
-		private void user_Click(object sender, RoutedEventArgs e)
-		{
-			User user = new User();
-			user.Show();
-			Close();
-		}
+
 		private void vKorzinu_Click(object sender, RoutedEventArgs e)
 		{
 			if (CurrentUser.User == null)
 			{
-				MessageBox.Show("Авторизуйтесь!", "Ошибка!", MessageBoxButton.OK);
+				CustomMessageBox.ShowMessage("Авторизуйтесь!", "Ошибка!");
 				return;
 			}
 
 			var button = sender as Button;
 			if (button == null)
 			{
-				MessageBox.Show("Не удалось получить информацию о кнопке.", "Ошибка!", MessageBoxButton.OK);
+				CustomMessageBox.ShowMessage("Не удалось получить информацию о кнопке.", "Ошибка!");
 				return;
 			}
 
 			var medication = button.DataContext as MedicationRepository.Medication;
 			if (medication == null)
 			{
-				MessageBox.Show("Не удалось получить информацию о товаре.", "Ошибка!", MessageBoxButton.OK);
+				CustomMessageBox.ShowMessage("Не удалось получить информацию о товаре.", "Ошибка!");
 				return;
 			}
 
@@ -190,7 +191,7 @@ namespace kursovaya
 				// Обновляем количество в базе данных
 				int newQuantity = GetCartItemQuantity(cartItemId) + 1;
 				dataBase.UpdateCartItemQuantity(cartItemId, newQuantity);
-				MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
+				CustomMessageBox.ShowMessage("Товар добавлен!", "Отлично!");
 			}
 			else
 			{
@@ -213,17 +214,17 @@ namespace kursovaya
 
 						if (rowsAffected > 0)
 						{
-							MessageBox.Show("Товар добавлен!", "Отлично!", MessageBoxButton.OK);
+							CustomMessageBox.ShowMessage("Товар добавлен!", "Отлично!");
 						}
 						else
 						{
-							MessageBox.Show("Не удалось добавить товар в корзину.", "Ошибка!", MessageBoxButton.OK);
+							CustomMessageBox.ShowMessage("Не удалось добавить товар в корзину.", "Ошибка!");
 						}
 					}
 				}
 				catch (Exception ex)
 				{
-					MessageBox.Show($"Ошибка при добавлении в корзину: {ex.Message}", "Ошибка", MessageBoxButton.OK);
+					CustomMessageBox.ShowMessage($"Ошибка при добавлении в корзину: {ex.Message}", "Ошибка");
 				}
 			}
 		}

@@ -12,8 +12,6 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
 using kursovaya.Models;
-
-
 namespace kursovaya
 {
 	
@@ -38,6 +36,8 @@ namespace kursovaya
 			InitializeTimer();
 			DisplayCurrentImage();
 			ObnovZagr();
+			this.DataContext = new MedicationViewModel();
+
 		}
 
 		private void ObnovZagr()
@@ -102,12 +102,6 @@ namespace kursovaya
 			Close();
 		}
 
-		private void geo_Click(object sender, RoutedEventArgs e)
-		{
-			Geo geo = new Geo();
-			geo.Show();
-			Close();
-		}
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
 		{
@@ -307,16 +301,22 @@ namespace kursovaya
 
 		private void Register_Click(object sender, RoutedEventArgs e)
 		{
-			var login = RegisterName.Text;
+			var login = RegisterNameUser.Text;
 			var password = RegisterPassword.Password;
 			var confirmPassword = RegisterConfirmPassword.Password;
 			var password1 = RegisterPasswordText.Text;
 			var confirmPassword1 = RegisterConfirmPasswordText.Text;
 
-			// Проверка, совпадают ли пароли
+			// Проверка, совпадают ли пароли и достаточно ли символов в пароле
 			if (password != confirmPassword || password1 != confirmPassword1)
 			{
-				System.Windows.MessageBox.Show("Пароли не совпадают! Пожалуйста, проверьте введенные пароли.", "Ошибка");
+				CustomMessageBox.ShowMessage("Пароли не совпадают! Пожалуйста, проверьте введенные пароли.", "Ошибка");
+				return;
+			}
+
+			if (password.Length < 5 || password1.Length < 5)
+			{
+				CustomMessageBox.ShowMessage("Пароль должен содержать не менее 5 символов.", "Ошибка");
 				return;
 			}
 
@@ -334,7 +334,7 @@ namespace kursovaya
 
 			if (idUser.HasValue)
 			{
-				System.Windows.MessageBox.Show("Аккаунт успешно создан!", "Успех!");
+				CustomMessageBox.ShowMessage("Аккаунт успешно создан!", "Успех!");
 
 				CurrentUser.User = new kursovaya.Models.User
 				{
@@ -350,11 +350,15 @@ namespace kursovaya
 			}
 			else
 			{
-				System.Windows.MessageBox.Show("Аккаунт не создан!");
+				CustomMessageBox.ShowMessage("Аккаунт не создан!", "Ошибка");
 			}
 
 			dataBase.closeConnection();
 		}
+
+
+
+
 
 
 
@@ -384,7 +388,7 @@ namespace kursovaya
 
 		private void RegisterPanel_Loaded(object sender, RoutedEventArgs e)
 		{	
-			RegisterName.MaxLength = 50;
+			RegisterNameUser.MaxLength = 50;
 			RegisterPassword.MaxLength = 16;
 			RegisterConfirmPassword.MaxLength = 16;
 
@@ -443,7 +447,12 @@ namespace kursovaya
 			var loginUser = LoginName.Text;
 			var passUser = LoginPassword.Password;
 
-
+			// Проверка длины пароля
+			if (passUser.Length < 5)
+			{
+				CustomMessageBox.ShowMessage("Пароль должен содержать не менее 5 символов.", "Ошибка");
+				return;
+			}
 
 			SqlDataAdapter adapter = new SqlDataAdapter();
 			DataTable table = new DataTable();
@@ -459,12 +468,12 @@ namespace kursovaya
 
 			if (table.Rows.Count == 1)
 			{
-				System.Windows.MessageBox.Show("Вы успешно вошли!", "Успешно!", MessageBoxButton.OK, MessageBoxImage.Information);
+				CustomMessageBox.ShowMessage("Вы успешно вошли!", "Успешно!");
 				var row = table.Rows[0];
 
 				CurrentUser.User = new kursovaya.Models.User
 				{
-					Id = (int)row["id_user"],  
+					Id = (int)row["id_user"],
 					Login = (string)row["login_user"],
 					Password = (string)row["password_user"]
 				};
@@ -476,9 +485,11 @@ namespace kursovaya
 			}
 			else
 			{
-				System.Windows.MessageBox.Show("Такого аккаунта не существует!", "Аккаунта не существует!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+				CustomMessageBox.ShowMessage("Такого аккаунта не существует!", "Ошибка");
 			}
 		}
+
+
 
 
 		private void Otkrglaz33_Click(object sender, RoutedEventArgs e)
@@ -525,6 +536,11 @@ namespace kursovaya
 			{
 				repository.Medications1 = repository.GetMedicationsOfType(type);
 			}
+		}
+
+		private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+
 		}
 	}
 }

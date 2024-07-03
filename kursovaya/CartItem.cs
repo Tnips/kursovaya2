@@ -1,4 +1,4 @@
-﻿	using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -9,11 +9,85 @@ namespace kursovaya
 {
 	public class CartItem : INotifyPropertyChanged
 	{
-		public int KorzinaID { get; set; }
-		public int IdUser { get; set; } // Добавьте поле для хранения id пользователя
-		public string Name { get; set; }
-		public decimal Price { get; set; }
-		public int Quantity { get; set; }
+		private int korzinaID;
+		public int KorzinaID
+		{
+			get { return korzinaID; }
+			set
+			{
+				korzinaID = value;
+				OnPropertyChanged(nameof(KorzinaID));
+			}
+		}
+
+		private int idUser;
+		public int IdUser
+		{
+			get { return idUser; }
+			set
+			{
+				idUser = value;
+				OnPropertyChanged(nameof(IdUser));
+			}
+		}
+
+		private string name;
+		public string Name
+		{
+			get { return name; }
+			set
+			{
+				name = value;
+				OnPropertyChanged(nameof(Name));
+			}
+		}
+
+		private int userID;
+		public int UserID
+		{
+			get { return userID; }
+			set
+			{
+				userID = value;
+				OnPropertyChanged(nameof(UserID));
+			}
+		}
+
+		private int medicationID;
+		public int MedicationID
+		{
+			get { return medicationID; }
+			set
+			{
+				medicationID = value;
+				OnPropertyChanged(nameof(MedicationID));
+			}
+		}
+
+		private decimal price;
+		public decimal Price
+		{
+			get { return price; }
+			set
+			{
+				price = value;
+				OnPropertyChanged(nameof(Price));
+				OnPropertyChanged(nameof(TotalPrice));
+			}
+		}
+
+		private int quantity;
+		public int Quantity
+		{
+			get { return quantity; }
+			set
+			{
+				quantity = value;
+				OnPropertyChanged(nameof(Quantity));
+				OnPropertyChanged(nameof(TotalPrice));
+			}
+		}
+
 		public decimal TotalPrice => Price * Quantity;
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -21,7 +95,6 @@ namespace kursovaya
 		protected virtual void OnPropertyChanged(string propertyName)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalPrice)));
 		}
 
 		public void IncreaseQuantity()
@@ -38,7 +111,15 @@ namespace kursovaya
 				OnPropertyChanged(nameof(Quantity));
 			}
 		}
+		private bool _isOrdered;
+		public bool IsOrdered
+		{
+			get { return _isOrdered; }
+			set
+			{
+				_isOrdered = value;
+				OnPropertyChanged(nameof(IsOrdered));
+			}
+		}
 	}
-
-
 }

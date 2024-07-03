@@ -73,12 +73,7 @@ namespace kursovaya
 			Close();
 		}
 
-		private void geo_Click(object sender, RoutedEventArgs e)
-		{
-			Geo geo = new Geo();
-			geo.Show();
-			Close();
-		}
+
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
 		{

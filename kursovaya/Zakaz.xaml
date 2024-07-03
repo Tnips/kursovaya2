@@ -5,13 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:kursovaya"
         mc:Ignorable="d"
-        Title="Zakaz" Height="290" Width="290"  WindowStartupLocation="CenterScreen"
+        Title="Zakaz" Height="250" Width="295"  WindowStartupLocation="CenterScreen"
         Icon="/images/Logo.png"
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="NoResize">
 
     <Window.Resources>
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- Стиль для текстовых подсказок в TextBox -->
         <Style x:Key="HintTextBlockStyle" TargetType="TextBlock">
             <Setter Property="Visibility" Value="Collapsed"/>
@@ -53,7 +67,7 @@
 
     </Window.Resources>
 
-    <Grid Margin="0,0,0,70">
+    <Grid Margin="0,0,0,-19">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -71,75 +85,96 @@
                 </Grid.ColumnDefinitions>
                 <Image Source="images/Logo.png" Height="30" VerticalAlignment="Center" Margin="7,0,11,0"/>
                 <TextBlock Text="BelPharm" VerticalAlignment="Center" Margin="0,0,138,0" Foreground="White" Grid.Column="1" FontFamily="Bernard MT Condensed" FontSize="15"/>
-                <Button Grid.Column="4" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="CloseWindow">
+                <Button Grid.Column="4" Width="20" Height="20" Margin="5,0" Background="Transparent" BorderBrush="Transparent" Click="Button_Click">
                     <Path Data="M 0,0 L 10,10 M 0,10 L 10,0" Stroke="White" StrokeThickness="2"/>
                 </Button>
             </Grid>
         </Border>
 
         <!-- Контент заказа -->
-        <Grid Margin="20,-8,-290,132">
+        <Grid Margin="31,44,-301,21">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto" MinHeight="27.96"/>
-                <RowDefinition Height="Auto" MinHeight="59.96"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="32.48"/>
+                <RowDefinition Height="16.48"/>
+                <RowDefinition Height="13.52"/>
+                <RowDefinition Height="46.44"/>
+                <RowDefinition Height="Auto" MinHeight="57.96"/>
+                <RowDefinition/>
+                <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
 
             <!-- Заголовок "Заказ товара" -->
-            <TextBlock x:Name="TextBlockNameDrag"  Margin="10,0,60,43" FontSize="20" FontWeight="Bold" Grid.RowSpan="2"/>
-
+            <TextBlock x:Name="tovarName" />
             <!-- Поле для ввода даты -->
 
             <!-- Поле для ввода номера карты -->
             <TextBox x:Name="CardNumberTextBox" Grid.Row="2" Margin="12,5,348,5" MaxLength="19" TextAlignment="Left" 
                  Text="{Binding CardNumber, UpdateSourceTrigger=PropertyChanged}"
-                 Style="{StaticResource HintedTextBoxStyle}" Tag="Номер карты (XXXX XXXX XXXX XXXX)"
+                 Style="{StaticResource HintedTextBoxStyle}" Tag="Карта (XXXX XXXX XXXX XXXX)"
                  PreviewTextInput="CardNumberTextBox_PreviewTextInput"
                  TextChanged="CardNumberTextBox_TextChanged" />
 
 
             <TextBox x:Name="MonthTextBox" Grid.Row="3" Margin="15,5,520,5" MaxLength="2" TextAlignment="Left" 
-         Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
-         Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="01"/>
+         Text="{Binding Month, UpdateSourceTrigger=PropertyChanged}"
+         PreviewTextInput="MonthTextBox_PreviewTextInput" Style="{StaticResource HintedTextBoxStyle}" Tag="01"/>
+
 
 
 
             <TextBlock Text="/" Grid.Row="3" Margin="39,5,504,5" TextAlignment="Center" />
 
+
             <TextBox x:Name="DayTextBox" Grid.Row="3" Margin="58,5,477,5" MaxLength="2" TextAlignment="Left" 
-                     Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="22" />
+         Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
+         Style="{StaticResource HintedTextBoxStyle}" PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="24" />
 
 
             <!-- Поле для ввода последних трех цифр карты -->
             <TextBox x:Name="CvcTextBox" Grid.Row="3" Margin="172,5,350,5" MaxLength="3" TextAlignment="Left" 
-                     Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource HintedTextBoxStyle}"  PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="CVC" />
+         Text="{Binding LastThreeDigits, UpdateSourceTrigger=PropertyChanged}"
+         Style="{StaticResource HintedTextBoxStyle}" PreviewTextInput="CardNumberTextBox_PreviewTextInput" Tag="CVC" />
+
+            <TextBlock Text="улица Аптеки для доставки" Grid.Row="5" Margin="15,6,20,7"/>
 
             <!-- Поле для ввода названия аптеки -->
-            <TextBox Grid.Row="4" Margin="12,5,348,5" TextAlignment="Left" 
-                     Text="{Binding PharmacyName, UpdateSourceTrigger=PropertyChanged}"
-                     Style="{StaticResource HintedTextBoxStyle}" Tag="Название аптеки доставки" />
+            <ComboBox x:Name="UlComboBox" Grid.Row="5" Margin="12,11,348,0" 
+          ItemsSource="{Binding Pharmacies}"
+          DisplayMemberPath="Name"
+          SelectedItem="{Binding SelectedPharmacy, Mode=TwoWay}"
+          IsEditable="False"/>
 
             <!-- Поле для ввода номера телефона -->
-            <TextBox x:Name="PhoneNumberTextBox" Grid.Row="5" Margin="12,5,348,5" TextAlignment="Left" MaxLength="22"
+            <TextBox x:Name="PhoneNumberTextBox" Grid.Row="7" Margin="12,5,348,30" TextAlignment="Left" MaxLength="22"
                  Text="+375 "
                  Style="{StaticResource HintedTextBoxStyle}" Tag="+375 (__) ___-__-__"
                  PreviewTextInput="PhoneNumberTextBox_PreviewTextInput"
-                 TextChanged="PhoneNumberTextBox_TextChanged" />
+                 TextChanged="PhoneNumberTextBox_TextChanged" Grid.RowSpan="2" />
 
 
 
             <!-- Кнопки Заказать и Отмена -->
-            <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="10,20,10,20">
-                <Button x:Name="OrderButton" Content="Заказать" Width="100" Margin="0,0,20,0" Click="OrderButton_Click"/>
-                <Button x:Name="CancelButton" Content="Отмена" Width="100" Click="CancelButton_Click" />
+            <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="10,16,10,30" Grid.RowSpan="2">
+                <Button x:Name="OrderButton" Content="Заказать" Width="100" Height="24" Margin="0,0,10,0" Click="OrderButton_Click"
+            Style="{StaticResource RoundedButtonStyle}"/>
+                <Button x:Name="CancelButton" Content="Отмена" Width="100" Click="CancelButton_Click"
+            Style="{StaticResource RoundedButtonStyle}" RenderTransformOrigin="0.5,0.5" Height="22">
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="0.917"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0.384"/>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
             </StackPanel>
+
         </Grid>
 
     </Grid>
