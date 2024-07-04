@@ -50,6 +50,8 @@
     <None Remove="images\nasmork_a0fvvutbiqvq_512.png" />
     <None Remove="images\optica.png" />
     <None Remove="images\placeholder_161667.png" />
+    <None Remove="images\pokupki_33z41494d6gh_512.png" />
+    <None Remove="images\pokupki_herw5kq2pyud_512.png" />
     <None Remove="images\polzovatel_27osszuxk306_512.png" />
     <None Remove="images\shopping-cart_66867.png" />
     <None Remove="images\sobachij_domik_38as4vhq3uzd_512.png" />
@@ -292,6 +294,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="images\pokupki_herw5kq2pyud_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="images\tabletkainf\10.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

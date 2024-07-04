@@ -28,6 +28,13 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+
+            <!-- Состояние при наведении -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="OptionsPanelStyle" TargetType="Grid">
             <Setter Property="Width" Value="60"/>
@@ -157,7 +164,7 @@
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="425">
-                        <ItemsControl ItemsSource="{Binding Medications11}" Height="430" Width="645">
+                        <ItemsControl ItemsSource="{Binding Medications11}" Width="645">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />

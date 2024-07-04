@@ -1,6 +1,7 @@
 ﻿using kursovaya.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,17 +16,16 @@ using System.Windows.Shapes;
 
 namespace kursovaya
 {
-    /// <summary>
-    /// Логика взаимодействия для korzina.xaml
-    /// </summary>
-    public partial class Korzina : Window
-    {
-		DataBase data = new DataBase();
-        public Korzina()
-        {
-            InitializeComponent();
-			DataContext = new KorzinaViewModel(data, CurrentUser.User.Id);
-			ObnovZagr();
+	/// <summary>
+	/// Логика взаимодействия для Dostavka.xaml
+	/// </summary>
+	public partial class Dostavka : Window
+	{
+		public Dostavka(List<CartItemModel> orderedItems)
+		{
+			InitializeComponent();
+			OrderedItems = orderedItems;
+			DataContext = this;
 		}
 
 		private void ObnovZagr()
@@ -42,7 +42,6 @@ namespace kursovaya
 				korzinaButton.Visibility = Visibility.Collapsed;
 			}
 		}
-
 		private void CloseWindow(object sender, RoutedEventArgs e)
 		{
 			Application.Current.Shutdown();
@@ -73,7 +72,6 @@ namespace kursovaya
 			korzina.Show();
 			Close();
 		}
-
 
 
 		private void akcii_Click(object sender, RoutedEventArgs e)
@@ -139,38 +137,17 @@ namespace kursovaya
 			user.Show();
 			Close();
 		}
+		public List<CartItemModel> OrderedItems { get; set; }
 
-		private void orderButton_Click(object sender, RoutedEventArgs e)
-		{
+		
 
-			if (sender is Button orderButton)
-			{
-				if (orderButton.DataContext is CartItemModel selectedItem)
-				{
-					Zakaz zakaz = new Zakaz(selectedItem);
-					zakaz.ShowDialog();
-					Korzina korzina = new Korzina();
-					korzina.Show();
-					this.Close();
-				}
-				else
-				{
-					CustomMessageBox.ShowMessage("DataContext is not a CartItem", "ok"); // Debugging line
-				}
-			}
-			else
-			{
-				CustomMessageBox.ShowMessage("Sender is not a Button", "ok"); // Debugging line
-			}
-		}
 
-		private void dostavka_Click(object sender, RoutedEventArgs e)
-		{
-			List<CartItemModel> orderedItems = data.GetOrderedCartItems(CurrentUser.User.Id);
-			Dostavka dostavka = new Dostavka(orderedItems);
-			dostavka.Show();
-			Close();
 
-        }
-    }
+
+
+
+
+
+	}
 }
+	

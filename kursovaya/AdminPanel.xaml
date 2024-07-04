@@ -1,0 +1,147 @@
+﻿<Window x:Class="kursovaya.AdminPanel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:kursovaya"
+        mc:Ignorable="d"
+        Title="AdminPanel" Height="535" Width="645"  WindowStyle="None"
+          AllowsTransparency="True"
+          ResizeMode="NoResize"
+          WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Style for TextBlocks -->
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Margin" Value="0,5"/>
+        </Style>
+
+        <!-- Style for TextBoxes -->
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Style for ComboBoxes -->
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="0,5"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+
+        <!-- Style for Buttons -->
+        <Style x:Key="BlueButtonStyle" TargetType="Button">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Margin" Value="0,10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Background" Value="LightBlue"/>
+            <Setter Property="Foreground" Value="DarkBlue"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="DarkBlue"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+
+        <!-- Style for StackPanels -->
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="0,10,0,-20">
+
+
+
+        <!-- Left Panel for Add/Edit -->
+        <StackPanel Margin="0,4,10,0"  Orientation="Vertical" VerticalAlignment="Top">
+            <!-- Selection Buttons -->
+            <StackPanel Margin="0,10 400 0" Width="632">
+                <Button Content="Хочу добавить товар" Style="{StaticResource BlueButtonStyle}" Click="AddItemButton_Click" Width="195"/>
+                <Button Content="Хочу удалить товар" Style="{StaticResource BlueButtonStyle}" Click="DeleteItemButton_Click" Margin="0,5" Width="195"/>
+            </StackPanel>
+
+            <StackPanel x:Name="AddEditPanel" Visibility="Visible" Width="617">
+                <TextBlock Text="Type Of"/>
+                <ComboBox x:Name="TypeOfComboBox" SelectedIndex="0" Margin="-410 0 0 0">
+                    <ComboBoxItem Content="Лекарственные препараты" />
+                    <ComboBoxItem Content="Нет" />
+                </ComboBox>
+
+                <TextBlock Text="Price"/>
+                <TextBox Name="PriceTextBox" Margin="-410 0 0 0"/>
+
+                <TextBlock Text="For What" />
+                <ComboBox x:Name="ForWhatComboBox" Margin="-410 0 0 0" SelectedIndex="0">
+                    <ComboBoxItem Content="Оптика" />
+                    <ComboBoxItem Content="Аптечка" />
+                    <ComboBoxItem Content="Бады" />
+                    <ComboBoxItem Content="Техника" />
+                    <ComboBoxItem Content="Косметика" />
+                    <ComboBoxItem Content="Мама" />
+                    <ComboBoxItem Content="Кожа" />
+                    <ComboBoxItem Content="Насморк" />
+                    <ComboBoxItem Content="Желудок" />
+                    <ComboBoxItem Content="Кашель" />
+                    <ComboBoxItem Content="Зубы" />
+                    <ComboBoxItem Content="La Roche-Posay" />
+                    <ComboBoxItem Content="A-Derma" />
+                    <ComboBoxItem Content="ВИТРУМ" />
+                    <ComboBoxItem Content="ISISPHARMA" />
+                    <ComboBoxItem Content="VICHY" />
+                    <ComboBoxItem Content="Bioderma" />
+                    <ComboBoxItem Content="CANPOL" />
+                    <ComboBoxItem Content="Bionorica" />
+                    <ComboBoxItem Content="Dermedic" />
+                    <ComboBoxItem Content="CeraVe" />
+                    <ComboBoxItem Content="Sensodyne" />
+                    <ComboBoxItem Content="PARODONTAX" />
+
+                </ComboBox>
+                <TextBlock Text="Opisanie"/>
+                <TextBox Name="OpisanieTextBox" Margin="-410 0 0 0"/>
+
+                <TextBlock Text="Foto"/>
+                <TextBox Name="FotoTextBox" Margin="-410 0 0 0"/>
+
+                <TextBlock Text="Name" Margin="0 -550 -170 0" Height="28" Width="70"/>
+                <TextBox Name="NameTextBox" Margin="0 -500 -300 0"/>
+
+                <TextBlock Text="Two Price"  Margin="0 -430 -170 0" Height="28" Width="70"/>
+                <TextBox Name="TwoPriceTextBox" Margin="0 -380 -300 0"/>
+
+                <ComboBox x:Name="AkciiComboBox" SelectedIndex="0" Margin="0 -280 -300 0">
+                    <ComboBoxItem Content="1" />
+                    <ComboBoxItem Content="0" />
+                </ComboBox>
+
+                <Button Name="AddButton" Content="Add Item" Style="{StaticResource BlueButtonStyle}" Click="AddButton_Click"/>
+            </StackPanel>
+
+            <!-- Delete Form -->
+            <StackPanel x:Name="DeletePanel" Visibility="Collapsed">
+                <TextBlock Text="Название для удаления"/>
+                <TextBox Name="DeleteNameTextBox" Margin="-410 0 0 0"/>
+
+                <Button Name="DeleteButton" Content="Delete Item" Style="{StaticResource BlueButtonStyle}" Click="DeleteButton_Click" Margin="0,10"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Right Panel for Actions -->
+        <StackPanel VerticalAlignment="Top" Margin="470,426,10,0">
+            <Button Content="Выйти" Style="{StaticResource BlueButtonStyle}" Click="Logout_Click" Width="150"/>
+        </StackPanel>
+    </Grid>
+</Window>

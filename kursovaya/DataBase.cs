@@ -76,6 +76,46 @@ namespace kursovaya
 			return cartItems;
 		}
 
+		// Method to get ordered cart items from the database
+		public List<CartItemModel> GetOrderedCartItems(int userId)
+		{
+			List<CartItemModel> orderedItems = new List<CartItemModel>();
+
+			string query = @"
+        SELECT z.KorzinaID, z.UserID, z.MedicationID, z.Quantity, z.Price, t.Name, t.Foto
+        FROM zakaz z
+        INNER JOIN tabletkadb t ON z.MedicationID = t.id
+        WHERE z.UserID = @UserID";
+
+			SqlCommand command = new SqlCommand(query, sqlConnection);
+			command.Parameters.AddWithValue("@UserId", userId);
+
+			openConnection();
+			SqlDataReader reader = command.ExecuteReader();
+
+			while (reader.Read())
+			{
+				CartItemModel item = new CartItemModel
+				{
+					Id = (int)reader["KorzinaID"],
+					UserId = (int)reader["UserId"],
+					ProductId = (int)reader["MedicationID"],
+					Quantity = (int)reader["Quantity"],
+					Price = (decimal)reader["Price"] * (int)reader["Quantity"],
+					Foto = reader["Foto"].ToString(),
+					Name = (string)reader["Name"]
+				};
+
+				orderedItems.Add(item);
+			}
+
+			reader.Close(); // Закрываем reader после использования
+			closeConnection();
+
+			return orderedItems;
+		}
+
+
 
 
 		// Method to update cart item quantity
@@ -114,6 +154,35 @@ namespace kursovaya
 				return Medications;
 
 			return Medications.Where(m => m.Contains(searchText, StringComparison.OrdinalIgnoreCase));
+		}
+
+		public void AddItem(string typeOf, decimal price, string forWhat, string opisanie, string foto, string name, decimal twoPrice, string akcii)
+		{
+			string query = "INSERT INTO tabletkadb (type_of, price, for_what, opisanie, foto, name, twoprice, akcii) VALUES (@TypeOf, @Price, @ForWhat, @Opisanie, @Foto, @Name, @TwoPrice, @Akcii)";
+			SqlCommand command = new SqlCommand(query, sqlConnection);
+			command.Parameters.AddWithValue("@TypeOf", typeOf);
+			command.Parameters.AddWithValue("@Price", price);
+			command.Parameters.AddWithValue("@ForWhat", forWhat);
+			command.Parameters.AddWithValue("@Opisanie", opisanie);
+			command.Parameters.AddWithValue("@Foto", foto);
+			command.Parameters.AddWithValue("@Name", name);
+			command.Parameters.AddWithValue("@TwoPrice", twoPrice);
+			command.Parameters.AddWithValue("@Akcii", akcii);
+
+			openConnection();
+			command.ExecuteNonQuery();
+			closeConnection();
+		}
+
+		public void DeleteItem(string name)
+		{
+			string query = "DELETE FROM tabletkadb WHERE name = @Name";
+			SqlCommand command = new SqlCommand(query, sqlConnection);
+			command.Parameters.AddWithValue("@Name", name);
+
+			openConnection();
+			command.ExecuteNonQuery();
+			closeConnection();
 		}
 	}
 }

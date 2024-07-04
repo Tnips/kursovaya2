@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Text.RegularExpressions;
 using System.Collections.ObjectModel;
+using Microsoft.VisualBasic.ApplicationServices;
 
 namespace kursovaya
 {
@@ -155,25 +156,22 @@ namespace kursovaya
 
 		private void OrderButton_Click(object sender, RoutedEventArgs e)
 		{
-			// Получение данных из текстовых полей и комбобоксов
+			// Retrieve data from text boxes and combo box
 			string card = CardNumberTextBox.Text;
 			string mes = MonthTextBox.Text;
-			string year = DayTextBox.Text; // Предполагается, что YearTextBox содержит последние две цифры года
+			string year = DayTextBox.Text; // Assuming YearTextBox is where you enter the last two digits of the year
 			string cvc = CvcTextBox.Text;
 			string number = PhoneNumberTextBox.Text;
 			string ul = UlComboBox.Text;
 
-			// Валидация всех полей перед продолжением
+			// Validate all fields before proceeding
 			if (card.Length == 19 && mes.Length == 2 && year.Length == 2 &&
 				cvc.Length == 3 && number.Length == 19 && ul.Length != 0)
 			{
-				// Показать сообщение об успешном заказе
+				// Show success message or handle further actions
 				CustomMessageBox.ShowMessage("Вам придет уведомление о доставке!", "Вам придет уведомление о доставке!");
 
-				// Закрыть текущее окно
-				Close();
-
-				// Вставка данных из 'korzina' в таблицу 'zakaz'
+				// Insert data from 'korzina' into 'zakaz' table
 				string query = "INSERT INTO zakaz (KorzinaID, UserID, MedicationID, Quantity, Price) " +
 							   "SELECT KorzinaID, UserID, MedicationID, Quantity, Price FROM korzina";
 
@@ -181,9 +179,14 @@ namespace kursovaya
 
 				try
 				{
-					korzina.DeleteCartItem(_cartItem);
 					dataBase.openConnection();
 					int rowsAffected = command.ExecuteNonQuery();
+					if (rowsAffected > 0)
+					{
+						// Get the ordered items
+						List<CartItemModel> orderedItems = dataBase.GetCartItems(CurrentUser.User.Id); // Replace with appropriate userId
+						dataBase.DeleteCartItem(_cartItem.Id);
+					}
 				}
 				catch (Exception ex)
 				{
@@ -193,10 +196,13 @@ namespace kursovaya
 				{
 					dataBase.closeConnection();
 				}
+
+				// Close the current window
+				Close();
 			}
 			else
 			{
-				// Показать сообщение об ошибке, если валидация не прошла
+				// Show error message if validation fails
 				CustomMessageBox.ShowMessage("Заполните все поля корректно перед оформлением заказа.", "Ошибка");
 			}
 		}

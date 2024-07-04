@@ -147,7 +147,7 @@
                         </Grid>
                     </Border>
                     <Border Margin="0,40,350,0" CornerRadius="10" Padding="10" Width="272">
-                        <TextBlock Text="Наборы для вшей безопасности" FontSize="40" Margin="0,0,-379,0"/>
+                        <TextBlock Text="Наборы для вашей безопасности" FontSize="40" Margin="0,0,-379,0"/>
                     </Border>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="220" Height="198" Margin="460,-260,0,0">
                         <Button x:Name="home" Click="home_Click" Width="110" Height="104" Margin="10,20,0,0" Style="{StaticResource HoverButtonStyle}">
@@ -166,7 +166,7 @@
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
                     <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="425">
-                        <ItemsControl ItemsSource="{Binding Medications1}" Height="430" Width="645">
+                        <ItemsControl ItemsSource="{Binding Medications1}" Width="645">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />

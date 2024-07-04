@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Media;
+using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Data;
 using System.Windows.Forms;
@@ -302,23 +303,41 @@ namespace kursovaya
 		private void Register_Click(object sender, RoutedEventArgs e)
 		{
 			var login = RegisterNameUser.Text;
-			var password = RegisterPassword.Password;
-			var confirmPassword = RegisterConfirmPassword.Password;
-			var password1 = RegisterPasswordText.Text;
-			var confirmPassword1 = RegisterConfirmPasswordText.Text;
+			var password = RegisterPasswordText.Visibility == Visibility.Visible ? RegisterPasswordText.Text : RegisterPassword.Password;
+			var confirmPassword = RegisterConfirmPasswordText.Visibility == Visibility.Visible ? RegisterConfirmPasswordText.Text : RegisterConfirmPassword.Password;
 
-			// Проверка, совпадают ли пароли и достаточно ли символов в пароле
-			if (password != confirmPassword || password1 != confirmPassword1)
+			Debug.WriteLine("Register_Click - Password: " + password + " ConfirmPassword: " + confirmPassword);
+
+			// Check if passwords match and have at least 5 characters
+			if (password != confirmPassword)
 			{
 				CustomMessageBox.ShowMessage("Пароли не совпадают! Пожалуйста, проверьте введенные пароли.", "Ошибка");
 				return;
 			}
 
-			if (password.Length < 5 || password1.Length < 5)
+			if (RegisterPassword.Visibility == Visibility.Visible)
+			{
+				password = RegisterPassword.Password;
+				confirmPassword = RegisterConfirmPassword.Password;
+			}
+			else
+			{
+				password = RegisterPasswordText.Text;
+				confirmPassword = RegisterConfirmPasswordText.Text;
+			}
+
+			if (password != confirmPassword)
+			{
+				CustomMessageBox.ShowMessage("Пароли не совпадают! Пожалуйста, проверьте введенные пароли.", "Ошибка");
+				return;
+			}
+
+			if (password.Length < 5)
 			{
 				CustomMessageBox.ShowMessage("Пароль должен содержать не менее 5 символов.", "Ошибка");
 				return;
 			}
+		
 
 			// Запрос с возвратом сгенерированного id_user
 			string querystring = $"INSERT INTO register(login_user, password_user) OUTPUT INSERTED.id_user VALUES (@login, @password)";
@@ -398,59 +417,71 @@ namespace kursovaya
 		{
 			if (RegisterPassword.Visibility == Visibility.Visible)
 			{
-				// Переключаемся на TextBox и показываем пароль
+				// Switch to TextBox and show password
 				RegisterPasswordText.Text = RegisterPassword.Password;
 				RegisterPassword.Visibility = Visibility.Collapsed;
 				RegisterPasswordText.Visibility = Visibility.Visible;
 				Zakrglaz1.Visibility = Visibility.Collapsed;
 				Otkrglaz1.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
-				// Переключаемся обратно на PasswordBox
+				// Switch back to PasswordBox
 				RegisterPassword.Password = RegisterPasswordText.Text;
-				RegisterPassword.Visibility = Visibility.Visible;
 				RegisterPasswordText.Visibility = Visibility.Collapsed;
+				RegisterPassword.Visibility = Visibility.Visible;
 				Zakrglaz1.Visibility = Visibility.Visible;
 				Otkrglaz1.Visibility = Visibility.Collapsed;
 			}
-
 		}
 
 		private void Otkrglaz22_Click(object sender, RoutedEventArgs e)
 		{
 			if (RegisterConfirmPassword.Visibility == Visibility.Visible)
 			{
-				// Переключаемся на TextBox и показываем пароль
+				// Switch to TextBox and show password
 				RegisterConfirmPasswordText.Text = RegisterConfirmPassword.Password;
 				RegisterConfirmPassword.Visibility = Visibility.Collapsed;
 				RegisterConfirmPasswordText.Visibility = Visibility.Visible;
 				Zakrglaz2.Visibility = Visibility.Collapsed;
 				Otkrglaz2.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
-				// Переключаемся обратно на PasswordBox
+				// Switch back to PasswordBox
 				RegisterConfirmPassword.Password = RegisterConfirmPasswordText.Text;
-				RegisterConfirmPassword.Visibility = Visibility.Visible;
 				RegisterConfirmPasswordText.Visibility = Visibility.Collapsed;
+				RegisterConfirmPassword.Visibility = Visibility.Visible;
 				Zakrglaz2.Visibility = Visibility.Visible;
 				Otkrglaz2.Visibility = Visibility.Collapsed;
 			}
-
 		}
 
 		private void Avtoriz_Click(object sender, RoutedEventArgs e)
 		{
 			var loginUser = LoginName.Text;
-			var passUser = LoginPassword.Password;
+			string passUser;
 
-			// Проверка длины пароля
+			if (LoginPassword.Visibility == Visibility.Visible)
+			{
+				passUser = LoginPassword.Password;
+			}
+			else
+			{
+				passUser = LoginPasswordText.Text;
+			}
+
 			if (passUser.Length < 5)
 			{
 				CustomMessageBox.ShowMessage("Пароль должен содержать не менее 5 символов.", "Ошибка");
+				return;
+			}
+			// Проверка логина и пароля admin
+			if (loginUser == "admin" && passUser == "admin")
+			{
+				AdminPanel adminPanel = new AdminPanel();
+				adminPanel.Show();
+				this.Close();
 				return;
 			}
 
@@ -492,29 +523,30 @@ namespace kursovaya
 
 
 
+
 		private void Otkrglaz33_Click(object sender, RoutedEventArgs e)
 		{
 			if (LoginPassword.Visibility == Visibility.Visible)
 			{
-				// Переключаемся на TextBox и показываем пароль
+				// Switch to TextBox and show password
 				LoginPasswordText.Text = LoginPassword.Password;
 				LoginPassword.Visibility = Visibility.Collapsed;
 				LoginPasswordText.Visibility = Visibility.Visible;
 				Zakrglaz3.Visibility = Visibility.Collapsed;
 				Otkrglaz3.Visibility = Visibility.Visible;
-
 			}
 			else
 			{
-				// Переключаемся обратно на PasswordBox
+				// Switch back to PasswordBox
 				LoginPassword.Password = LoginPasswordText.Text;
-				LoginPassword.Visibility = Visibility.Visible;
 				LoginPasswordText.Visibility = Visibility.Collapsed;
+				LoginPassword.Visibility = Visibility.Visible;
 				Zakrglaz3.Visibility = Visibility.Visible;
 				Otkrglaz3.Visibility = Visibility.Collapsed;
 			}
-
 		}
+
+		
 
 		private void LoginPanel_Loaded(object sender, RoutedEventArgs e)
 		{
@@ -542,5 +574,56 @@ namespace kursovaya
 		{
 
 		}
+
+		private void LoginPassword_PasswordChanged(object sender, RoutedEventArgs e)
+		{
+			if (LoginPasswordText.Visibility == Visibility.Visible)
+			{
+				LoginPasswordText.Text = LoginPassword.Password;
+			}
+		}
+
+		private void LoginPasswordText_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (LoginPassword.Visibility == Visibility.Visible)
+			{
+				LoginPassword.Password = LoginPasswordText.Text;
+			}
+		}
+
+		private void RegisterPassword_PasswordChanged(object sender, RoutedEventArgs e)
+		{
+			if (RegisterPasswordText.Visibility == Visibility.Visible)
+			{
+				RegisterPasswordText.Text = RegisterPassword.Password;
+			}
+		}
+
+		private void RegisterPasswordText_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (RegisterPassword.Visibility == Visibility.Visible)
+			{
+				RegisterPassword.Password = RegisterPasswordText.Text;
+			}
+		}
+
+		private void RegisterConfirmPassword_PasswordChanged(object sender, RoutedEventArgs e)
+		{
+			if (RegisterConfirmPasswordText.Visibility == Visibility.Visible)
+			{
+				RegisterConfirmPasswordText.Text = RegisterConfirmPassword.Password;
+			}
+		}
+
+		private void RegisterConfirmPasswordText_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			if (RegisterConfirmPassword.Visibility == Visibility.Visible)
+			{
+				RegisterConfirmPassword.Password = RegisterConfirmPasswordText.Text;
+			}
+		}
+
+
 	}
+
 }

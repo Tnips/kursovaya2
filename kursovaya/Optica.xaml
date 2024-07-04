@@ -16,7 +16,6 @@
     </Window.DataContext>
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Background" Value="#FC4445" />
             <Setter Property="Template">
@@ -28,8 +27,16 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
 
+            <!-- Состояние при наведении -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+       
 
         <Style x:Key="OptionsPanelStyle" TargetType="Grid">
             <Setter Property="Width" Value="60"/>
@@ -158,8 +165,8 @@
                         <Ellipse Width="55" Height="55" Fill="#FC4445" Margin="10,-60,0,0"/>
                         <Ellipse Width="45" Height="46" Fill="#FC4445" Margin="-10,-140,0,0"/>
                     </StackPanel>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="425">
-                        <ItemsControl ItemsSource="{Binding Medications4}" Height="430" Width="645">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Width="660" Height="420">
+                        <ItemsControl ItemsSource="{Binding Medications4}" Width="auto">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <WrapPanel />

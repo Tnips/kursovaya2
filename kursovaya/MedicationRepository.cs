@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kursovaya.Models;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
@@ -279,6 +280,17 @@ namespace kursovaya
 			}
 		}
 
+		private ObservableCollection<Product> products;
+		public ObservableCollection<Product> Product
+		{
+			get { return products; }
+			set
+			{
+				products = value;
+				OnPropertyChanged(nameof(Product));
+			}
+		}
+
 
 		private string connectionString = @"Data Source=DESKTOP-AOF7V3Q;Initial Catalog=MedDB;Integrated Security=True";
 
@@ -309,6 +321,7 @@ namespace kursovaya
 			Medications22 = GetMedicationsOfType("Sensodyne");
 			Medications23 = GetMedicationsOfType("PARODONTAX");
 			Medications24 = GetMedicationsForAkcii();
+			products = GetProducts();
 
 		}
 
@@ -438,6 +451,52 @@ namespace kursovaya
 			}
 
 			return medications23;
+
+
+		}
+		public ObservableCollection<Product> GetProducts()
+		{
+			ObservableCollection<Product> products = new ObservableCollection<Product>();
+
+			using (SqlConnection connection = new SqlConnection(connectionString))
+			{
+				string query = "SELECT Id, Name, TypeOf, Price, ForWhat, Description, Akcii, Photo FROM tabletkadb";
+
+				using (SqlCommand command = new SqlCommand(query, connection))
+				{
+					try
+					{
+						connection.Open();
+
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								Product product = new Product
+								{
+									Id = (int)reader["Id"],
+									Name = (string)reader["Name"],
+									TypeOf = (string)reader["TypeOf"],
+									Price = (decimal)reader["Price"],
+									ForWhat = (string)reader["ForWhat"],
+									Description = (string)reader["Description"],
+									Akcii = (string)reader["Akcii"],
+									Photo = (string)reader["Photo"]
+								};
+
+								products.Add(product);
+							}
+						}
+					}
+					catch (Exception ex)
+					{
+						// Обработка исключения (например, логирование или вывод сообщения об ошибке)
+						Console.WriteLine($"Ошибка при выполнении запроса: {ex.Message}");
+					}
+				}
+			}
+
+			return products;
 		}
 
 		public class Medication : INotifyPropertyChanged
@@ -500,6 +559,11 @@ namespace kursovaya
 			{
 				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 			}
+
+
+
+			
+
 		}
 	}
 }
